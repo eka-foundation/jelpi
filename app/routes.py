@@ -16,3 +16,7 @@ def application():
         print('NOT A VALID SUBMISSION')
         return render_template('need-help.html', region=region)
 
+@app.route('/need', methods=['GET','POST'])
+def need():
+    region = 'Dharamsala'
+    return render_template('meta.html', region=region)
