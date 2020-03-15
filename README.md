@@ -1,8 +1,23 @@
-As you can see, there is no documentation...
+## Install
 
-`user@computer:~/ . venv/bin/activate` is what I use to run the venv
+### With Conda
 
-and then from the project directory, run `flask run`
+```
+conda create -n karuna
+conda activate karuna
+pip3 install flask
+```
 
-There are a few dependencies which are already part of the repo which will need proper declaration in a requirements.txt file once packaging happens.
+### Without Conda
 
+```
+python 3 -m venv your_environment
+your_environment/bin/activate
+pip3 install flask
+```
+
+## Run
+
+```
+flask run
+```
