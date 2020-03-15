@@ -8,15 +8,13 @@
       <div class="form-group display-4">
         <img src="/static/hands.png" width="150px" class="rounded mx-auto d-block pb-4">
         <select class="form-control input-lg shadow-sm rounded select-css mx-auto d-block" id="input-requirement-class" name="requirement-class" onchange="this.form.submit()">
-          <option value="medicine">medicine</option>
-          <option value="food">food</option>
-          <option value="supplies">supplies</option>
+          <option value="null" selected disabled>I need help...</option>
+          <option value="medicine">... purchasing medicine</option>
+          <option value="food">... shopping groceries</option>
+          <option value="supplies">... with something else</option>
         </select>
       </div>
     </form> 
   </div>  
 </div>
 {% endblock %}
-
-
-<form class="form-inline"></form>
