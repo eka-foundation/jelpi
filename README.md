@@ -11,8 +11,8 @@ pip3 install flask
 ### Without Conda
 
 ```
-python 3 -m venv your_environment
-your_environment/bin/activate
+python3 -m venv venv
+. venv/bin/activate
 pip3 install flask
 ```
 
