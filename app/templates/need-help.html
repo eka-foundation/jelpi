@@ -1,92 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form class="form-inline" action="/" method="post">
-  <div class="form-group">
-    Hi. My name is
-    <input type="text" class="form-control" id="input-name" placeholder="name (optional)" name="name">
-  </div>.
-  I am residing at
-  <div class="form-group" id="div-location">
-  <input type="text" class="form-control" id="input-location" placeholder="location" name="location">
-  </div>
-  . I am 
-  <div class="form-group">
-    <select class="form-control" id="input-state" name="state">
-      <option value="quarantine">in self-quarantine</option>
-      <option value="self-isolation">in self-isolation</option>
-      <option value="cant-go-out">unable to go out</option>
-    </select>
-  </div>
-  and  
-  <div class="form-group">
-    <select class="form-control" id="input-status" name="status">
-      <option value="high">need</option>
-      <option value="medium">would like</option>
-      <option value="low">would appreciate</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <select class="form-control" id="input-requirement-class" name="requirement-class">
-      <option value="medicine">medicine</option>
-      <option value="food">food</option>
-      <option value="supplies">supplies</option>
-    </select>
-  </div>
-  . I am reachable by 
-  <div class="form-group">
-    <select class="form-control" id="input-contact-class" name="contact-class">
-      <option value="telephone">telephone</option>
-      <option value="sms">sms</option>
-      <option value="whatsapp">whatsapp</option>
-      <option value="telegram">telegram</option>
-    </select>
-  </div>
-   at 
-  <input type="number" class="form-control" id="input-contact" placeholder="contact number" min="6000000000" max="9999999999" name="number">
-  . Below are are my requirements. I need them 
-   <div class="form-group">
-    <select class="form-control" id="input-priority" name="priority">
-      <option value="high">urgently</option>
-      <option value="medium">soon</option>
-      <option value="low">anytime that's possible</option>
-    </select>
-  </div>
-  .
-  <div class="form-group">
-    <label for="requirement">Requirements:</label>
-    <textarea class="form-control" rows="5" id="input-requirement" name="requirement"></textarea>
-  </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-default">Submit</button>
-  </div>
-</form>
-<script>
-	$("#input-name").focus(); 
-	function showPosition() {
-		if(navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+<div class="container h-100">
 
-		} else {
-			alert("Sorry, your browser does not support HTML5 geolocation.");
-		}
-	}
-	function successCallback(position) {
-		var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
-		//document.getElementById("result").innerHTML = positionInfo;
-		$( "#input-location" ).val(positionInfo);
-	}
-	function errorCallback(error){
-		$( "#input-location" ).val("Dharamsala");
-	}
-	$( "#input-location" ).select(function() {
-		//$( "#input-location" ).val("location is set!");
-		showPosition();
-	});
-	$( "#div-location").click(function() {
-  		$( "#input-location" ).select();
-	});
-</script>
-<b>Love and kindness!</b> <br/><br/>
-(Please keep the information on this website detailed, accurate and correct. Respect the privacy of others.)
+  <div class="row h-100 justify-content-center align-items-center">
+    <form class="col-12" action="/need" method="post">
+      <div class="form-group display-4">
+        <img src="/static/hands.png" width="150px" class="rounded mx-auto d-block pb-4">
+        <select class="form-control input-lg shadow-sm rounded select-css mx-auto d-block" id="input-requirement-class" name="requirement-class" onchange="this.form.submit()">
+          <option value="null" selected disabled>I need help...</option>
+          <option value="medicine">... purchasing medicine</option>
+          <option value="food">... shopping groceries</option>
+          <option value="supplies">... with something else</option>
+        </select>
+      </div>
+    </form> 
+  </div>  
+</div>
 {% endblock %}
