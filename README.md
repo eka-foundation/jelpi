@@ -28,7 +28,15 @@
 
 Jelpi is a marketplace that bring together people who need help with people who want to help. For example, a person who is unable to leave their home might need groceries, whereas someone in the community who is going to grocery store anyway may want to help.
 
-#### KEY FEATURES
+### how? 
+
+Jelpi is not a service, it is a platform that can rapidly deployed (TODO: single click AWS deployment) and customized for any purpose that involves mathing of help requests with help offers.
+
+### why? 
+
+Taking care of others is the basic principle of being a human; if we can afford helping someone in our community, by doing so, we are strengthening the community, and therefore also helping ourselves.
+
+### Key Features
 
 ASK:
 
@@ -44,14 +52,9 @@ GIVE:
 
 *by next week we should already have GIVE preferences which allow to further refine the match list, and in two weeks from now in true matchmaking service that pops up matches as they become available and the fastest to respond gets it
 
+GENERAL: 
 
-### how? 
-
-Jelpi is not a service, it is a platform that can rapidly deployed (TODO: single click AWS deployment) and customized for any purpose that involves mathing of help requests with help offers.
-
-### why? 
-
-Taking care of others is the basic principle of being a human; if we can afford helping someone in our community, by doing so, we are strengthening the community, and therefore also helping ourselves.
+It must take no longer than 10-minute without computer savvy to change the look and feel, language, and logo of the application. We're not building a service, but a "kit" for those that want to provide service.
 
 ## Install
 
