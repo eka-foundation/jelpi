@@ -6,6 +6,18 @@ const extractSass = new ExtractTextPlugin({
   filename: '/css/app.css'
 })
 
+function scriptRules() {
+  return [
+    {
+      test: /\.js$/,
+      exclude: [/node_modules/],
+      use: {
+        loader: 'babel-loader'
+      }
+    }
+  ]
+}
+
 function sassRules() {
   return [
     {
@@ -21,13 +33,15 @@ function sassRules() {
 
 module.exports = {
   entry: [
-    './resources/assets/sass/app.scss'
+    './resources/assets/sass/app.scss',
+    './resources/assets/scripts/app.js'
   ],
   output: {
-    path: path.resolve('./public/')
+    path: path.resolve('./public/'),
+    filename: 'js/app.js'
   },
   module: {
-    rules: sassRules()
+    rules: sassRules().concat(scriptRules())
   },
   plugins: [
     extractSass

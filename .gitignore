@@ -16,3 +16,4 @@ database/*.sqlite
 
 # Built frontend assets
 public/css/app.css
+public/js/app.js

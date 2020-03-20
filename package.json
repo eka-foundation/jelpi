@@ -34,6 +34,10 @@
   },
   "devDependencies": {
     "@adonisjs/cli": "^4.0.12",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.6.4",
     "css-loader": "^3.4.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "node-sass": "^4.13.1",
