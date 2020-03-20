@@ -19,6 +19,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@adonisjs/ace": "^5.0.8",
     "@adonisjs/ally": "^2.1.3",
     "@adonisjs/antl": "^2.0.7",
     "@adonisjs/auth": "^3.0.7",
@@ -35,7 +36,6 @@
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
-    "@adonisjs/ace": "^5.0.8",
     "@adonisjs/cli": "^4.0.12",
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
