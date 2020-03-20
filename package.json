@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production"
   },
   "keywords": [
     "adonisjs",
@@ -31,7 +33,14 @@
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
-    "@adonisjs/cli": "^4.0.12"
+    "@adonisjs/cli": "^4.0.12",
+    "css-loader": "^3.4.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
   },
   "autoload": {
     "App": "./app"

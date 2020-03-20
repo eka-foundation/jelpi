@@ -13,3 +13,6 @@ database/*.sqlite
 # VSCode & Webstorm history directories
 .history
 .idea
+
+# Built frontend assets
+public/css/app.css
