@@ -60,9 +60,25 @@ Application is based on [AdonisJS](https://adonisjs.com/)
 
 ## Quick start
 
+### With Docker
+
+Docker quick start will build container which contains everything required for runtime
+
+> Requires Docker to be installed https://www.docker.com/
+
+```bash
+# Build it
+docker build -t jelpi .
+
+# Run it and expose port 3333
+docker run -p 3333:3333 jelpi
+```
+
 ### With Node
 
 NodeJS quick start will build all required assets and start the server
+
+> Requires NodeJS to be installed https://nodejs.org/
 
 ```bash
 # Install dependencies
