@@ -80,6 +80,7 @@ npm run build:prod
 
 Frontend assets are in `resources/assets` folder
 CSS will be built from `resources/assets/sass/app.scss` to `public/css/app.css`
+JS will be built from `resources/assets/js/app.js` to `public/js/app.js`
 Webpack is used as task runner and bundler, it's configuration is in project root
 `webpack.config.js`
 
