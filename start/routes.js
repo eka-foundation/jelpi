@@ -17,3 +17,12 @@
 const Route = use('Route')
 
 Route.on('/').render('index')
+
+Route.get('facebook', async ({ ally }) => {
+  await ally.driver('facebook').redirect()
+})
+
+Route.get('authenticated/facebook', async ({ ally, response }) => {
+  const fb_user = await ally.driver('facebook').getUser()
+  return response.redirect('back', { fb_user: fb_user })
+})
