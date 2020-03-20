@@ -10,6 +10,10 @@ Jelpi.helper = {
       return true;
     } catch (e) {}
     return false;
+  },
+  isTest: () => {
+    return false;
+    return /^https?:\/\/127\.0\.0\.1/.test( location.href );
   }
 }
 Jelpi.main = class {
@@ -18,36 +22,65 @@ Jelpi.main = class {
     this.menu = new Jelpi.menu(this);
     this.asks = new Jelpi.asks(this);
   }
-  pushEmptyUrl() {
-
-    const state = {};
-    const title = '';
-    const url = '.';
-    history.pushState(state, title, url);
-  }
   init() {
     this.frontPage.init();
     this.menu.init();
     this.asks.init();
   }
-  test() {
-    document.querySelector('table').click();
+  locate(callback) {
+    if( this.hasOwnProperty('location') ){
+      callback( this.location );
+      return;
+    }
+    let mock = {
+      coords: {
+        latitude: 61.92410999999999,
+        longitude: 25.748151,
+        altitude: null,
+        accuracy: 472109,
+        altitudeAccuracy: null,
+        heading: null,
+        speed: null
+      },
+      timestamp: Date.now()
+    };
+    // mock = null;
+    if( Jelpi.helper.isTest() ){
+      setTimeout(() => { callback(mock); }, 500);
+      return;
+    }
+    let onError = () => {
+      callback(null);
+    },
+    onSuccess = (result) => {
+      this.location = result;
+      callback( this.location );
+    };
+    if( !navigator.geolocation ){
+      onError();
+    } else {
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
   }
 }
 Jelpi.asks = class {
   constructor(parent) {
     this.parent = parent;
     this.data = [];
+  }
+  init() {
     for(let i = 0; i < 100; i++){
       this.data.push({
-        need: 'medicine',
-        name: 'John Doe',
+        need: 'Medicine',
+        timeStamp: Date.now() - Math.random() * 1000 * 60 * 60,
         location: 'Foo Bar'
       });
     }
+    this.data.map( this.initAsk.bind(this) );
   }
-  init() {
-    l(this.data);
+  initAsk(object) {
+    l('object');
+    // l(object);
   }
 }
 Jelpi.menu = class {
@@ -93,14 +126,14 @@ Jelpi.menu = class {
   }
   onResize() {
     let onTimeout = () => {
-      this.open(false);
+      window.innerWidth > 700 && this.open(false);
       this.updateMenu();
     }
     clearTimeout( this.resizeTimeout );
     this.resizeTimeout = setTimeout( onTimeout, 50 );
   }
   updateMenu() {
-    let method = window.innerWidth < 700 ? 'add' : 'remove';
+    let method = window.innerWidth <= 700 ? 'add' : 'remove';
     document.body.classList[method]('narrow');
   }
   toggle() {
@@ -149,13 +182,24 @@ Jelpi.frontPage = class {
     setTimeout(()=> { document.body.classList.add('ready'); }, 20);
   }
   onNeed() {
+    this.parent.locate( this.onLocate.bind(this) );
     document.body.classList.add('need');
-    this.parent.pushEmptyUrl();
     let onTimeout = () => {
       document.querySelector('input').focus();
     };
     let shouldAutoFocus = !Jelpi.helper.isTouch() || Jelpi.helper.isAndroid();
     shouldAutoFocus && setTimeout( onTimeout, 200 );
+  }
+  onLocate(result) {
+    if( !result ){
+      return this.destroy();
+    }
+    document.body.classList.add('located');
+    let input = this.inputs.array.filter(input => { return input.element.classList.contains('location'); })[0];
+    input.element.classList.add('focus');
+  }
+  destroy() {
+    document.body.classList.add('destroyed');
   }
   onCancel() {
     document.body.classList.remove('need');
@@ -200,6 +244,9 @@ Jelpi.input = class {
   }
   init() {
     let element = this.element.querySelector('input, button');
+    if( !element ){
+      return;
+    }
     element.addEventListener('mouseover', this.onMouseOver.bind(this));
     element.addEventListener('mouseout', this.onMouseOut.bind(this));
     element.addEventListener('mousedown', this.onMouseDown.bind(this));
@@ -268,6 +315,9 @@ Jelpi.sendButton = class {
     event.preventDefault();
     event.stopPropagation();
     if( this.sending ){
+      return;
+    }
+    if( !this.parent.location ){
       return;
     }
     this.sending = true;
@@ -375,4 +425,5 @@ if( /SM-G950F/.test( navigator.userAgent )
 
 window.jelpi = new Jelpi.main();
 window.jelpi.init();
-// /^https?:\/\/127\.0\.0\.1/.test(location.href) && window.jelpi.test();
+// document.querySelector('needs > *').click();
+// document.querySelector('hamburger').click();

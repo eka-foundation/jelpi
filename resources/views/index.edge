@@ -6,10 +6,10 @@
 <meta name='Resource-type' content='Document' />
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 {{ style('/css/app') }}
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i&display=swap" rel="stylesheet">
 </head>
 <body>
-<menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><div><a href='.'><table><td>Get Help</td></table></a><a href='#givehelp'><table><td>Give Help</td></table></a><a href='#safety'><table><td>Safety</td></table></a><a href='#about'><table><td>About</td></table></a></div></menu>
+<menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>Get Help</td></table></a><a href='#givehelp'><table><td>Give Help</td></table></a><a href='#safety'><table><td>Safety</td></table></a><a href='#about'><table><td>About</td></table></a></td></table></menu>
 <table class='section gethelp' id='section0'>
   <tr>
     <td>
@@ -24,8 +24,9 @@
         <div data-type='medicine'><table><tr><td>I need medicine</td></tr></table></div><div data-type='food'><table><tr><td>I need food</td></tr></table></div><div data-type='supplies'><table><tr><td>I need supplies</td></tr></table></div>
       </needs>
       <form>
+        <destroyed><div>:-(</div>We couldn't determine your location!</destroyed>
         <inputwrap><input type='text'><fx1></fx1><fx2></fx2><placeholder>My name</placeholder></inputwrap>
-        <inputwrap><input type='text'><fx1></fx1><fx2></fx2><placeholder>My location</placeholder></inputwrap>
+        <inputwrap class='location locating'><span>Current Location</span><placeholder class='busy'>Locating</placeholder><placeholder class='done'>Location</placeholder></inputwrap>
         <inputwrap><button id='cancel' class='action'>Cancel</button><fx1></fx1><fx2></fx2></inputwrap>
         <inputwrap><button id='send' class='action'>Send</button><fx1></fx1><fx2></fx2></inputwrap>
       </form>
@@ -36,6 +37,8 @@
   <tr>
     <td>
       <h1>Give Help</h1>
+      <asks>
+      </asks>
     </td>
   </tr>
 </table>
@@ -43,6 +46,12 @@
   <tr>
     <td>
       <h1>Safety</h1>
+      <div>Use protective gear</div>
+      <div>Minimize surface contact</div>
+      <div>Keep physical distance with people</div>
+      <div>Minimize leaving home</div>
+      <div>Know your facts</div>
+      <div>Quarantine immediately if in doubt</div>
     </td>
   </tr>
 </table>
@@ -50,6 +59,7 @@
   <tr>
     <td>
       <h1>About</h1>
+      <p>Bring to the table survival strategies to ensure proactive domination. At the end of the day, going forward.</p>
     </td>
   </tr>
 </table>
