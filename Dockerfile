@@ -17,6 +17,10 @@ FROM node:13-alpine
 ENV NODE_ENV=production
 # Disable .env file loading
 ENV ENV_SILENT=true
+# Make it listen to all traffic (in container)
+ENV HOST=0.0.0.0
+# Set exposed port to 3333
+ENV PORT=3333
 # Set app key at start time
 ENV APP_KEY=
 # Use non-root user
