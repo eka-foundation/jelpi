@@ -31,4 +31,5 @@ module.exports = {
       clientSecret: Env.get('FB_CLIENT_SECRET'),
       redirectUri: `${Env.get('APP_URL')}/authenticated/facebook`
     },
+  }
 }
