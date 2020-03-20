@@ -42,8 +42,7 @@ Jelpi.asks = class {
       this.data.push({
         need: 'medicine',
         name: 'John Doe',
-        location: 'Foo Bar',
-        status: 'Self-quarantine'
+        location: 'Foo Bar'
       });
     }
   }
