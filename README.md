@@ -28,11 +28,11 @@
 
 Jelpi is a marketplace that bring together people who need help with people who want to help. For example, a person who is unable to leave their home might need groceries, whereas someone in the community who is going to grocery store anyway may want to help.
 
-### how? 
+### how?
 
 Jelpi is not a service, it is a platform that can rapidly deployed (TODO: single click AWS deployment) and customized for any purpose that involves mathing of help requests with help offers.
 
-### why? 
+### why?
 
 Taking care of others is the basic principle of being a human; if we can afford helping someone in our community, by doing so, we are strengthening the community, and therefore also helping ourselves.
 
@@ -45,39 +45,41 @@ ASK:
 - wait for notification for match
 - move to communicate in facebook messanger (requires login with facebook)
 
-GIVE: 
+GIVE:
 
 - find suitable match from proximity sorted list of asks*
 - move to communicate in facebook messanger (requires login with facebook)
 
 *by next week we should already have GIVE preferences which allow to further refine the match list, and in two weeks from now in true matchmaking service that pops up matches as they become available and the fastest to respond gets it
 
-GENERAL: 
+GENERAL:
 
 It must take no longer than 10-minute without computer savvy to change the look and feel, language, and logo of the application. We're not building a service, but a "kit" for those that want to provide service.
 
-## Install
+## Setup
 
-Currently the application is Flask based (TODO: move to AdonisJS). 
+Application is based on [AdonisJS](https://adonisjs.com/)
 
-### With Conda
+First install all dependencies:
 
-```
-conda create -n karuna
-conda activate karuna
-pip3 install flask
+```bash
+npm install
 ```
 
-### Without Conda
-
-```
-python3 -m venv venv
-. venv/bin/activate
-pip3 install flask
-```
+Then copy `.env.example` to `.env` and set some secure `APP_KEY` in `.env` file
 
 ## Run
 
+For dev mode with auto restart:
+
+```bash
+npx adonis serve --dev
 ```
-flask run
+
+For production:
+
+```bash
+node server.js
+# or
+npm run start
 ```
