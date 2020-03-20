@@ -28,6 +28,7 @@ Jelpi.main = class {
   init() {
     this.frontPage.init();
     this.menu.init();
+    this.asks.init();
   }
   test() {
     document.querySelector('table').click();
@@ -45,6 +46,8 @@ Jelpi.asks = class {
         status: 'Self-quarantine'
       });
     }
+  }
+  init() {
     l(this.data);
   }
 }
