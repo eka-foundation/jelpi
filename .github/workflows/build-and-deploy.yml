@@ -15,11 +15,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build container
-    run: |
-        RELEASE_TAG=$(echo $GITHUB_REF | cut -d '/' -f3)
-        docker login docker.pkg.github.com --username mcsneaky --password ${{ secrets.REGISTRY_ACCESS_TOKEN }}
-        docker build -t docker.pkg.github.com/eka-foundation/jelpi/core:$RELEASE_TAG .
-        docker push docker.pkg.github.com/eka-foundation/jelpi/core:$RELEASE_TAG
+      run: |
+          RELEASE_TAG=$(echo $GITHUB_REF | cut -d '/' -f3)
+          docker login docker.pkg.github.com --username mcsneaky --password ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+          docker build -t docker.pkg.github.com/eka-foundation/jelpi/core:$RELEASE_TAG .
+          docker push docker.pkg.github.com/eka-foundation/jelpi/core:$RELEASE_TAG
 
     - name: Deploy to production
       uses: appleboy/ssh-action@master
