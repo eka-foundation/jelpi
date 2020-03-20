@@ -56,6 +56,23 @@ GENERAL:
 
 It must take no longer than 10-minute without computer savvy to change the look and feel, language, and logo of the application. We're not building a service, but a "kit" for those that want to provide service.
 
+## Quickstart
+
+### With Node
+
+```bash
+# Clone project
+git clone https://github.com/eka-foundation/jelpi.git
+
+# Install dependencies
+npm install
+
+# Rename .env.example to .env and set secure APP_KEY
+
+# Start it up
+npm run start
+```
+
 ## Setup
 
 Application is based on [AdonisJS](https://adonisjs.com/)
