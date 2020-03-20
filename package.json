@@ -30,8 +30,9 @@
     "@adonisjs/lucid": "^6.1.3",
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
-    "sqlite3": "^4.1.1",
-    "@adonisjs/validator": "^5.0.6"
+    "@adonisjs/validator": "^5.0.6",
+    "@adonisjs/vow": "^1.0.17",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "@adonisjs/ace": "^5.0.8",

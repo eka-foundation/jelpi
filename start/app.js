@@ -22,6 +22,7 @@ const providers = [
   '@adonisjs/ally/providers/AllyProvider',
   '@adonisjs/antl/providers/AntlProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
+  '@adonisjs/vow/providers/VowProvider'
 ]
 
 /*
