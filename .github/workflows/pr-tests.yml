@@ -1,0 +1,24 @@
+name: PR-Tests
+
+on: [push]
+
+jobs:
+  build:
+    name: Node ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup
+      run: |
+        mv .env.example .env
+        npm install
+
+    - name: Run tests
+      run: |
+        npm run test
