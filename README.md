@@ -68,6 +68,21 @@ npm install
 
 Then copy `.env.example` to `.env` and set some secure `APP_KEY` in `.env` file
 
+## Building frontend assets
+
+```bash
+# In development mode
+npm run build:dev
+
+# In production mode
+npm run build:prod
+```
+
+Frontend assets are in `resources/assets` folder
+CSS will be built from `resources/assets/sass/app.scss` to `public/css/app.css`
+Webpack is used as task runner and bundler, it's configuration is in project root
+`webpack.config.js`
+
 ## Run
 
 For dev mode with auto restart:
@@ -83,3 +98,13 @@ node server.js
 # or
 npm run start
 ```
+
+## Writing translations
+
+Translation files exist in `resources/locales/LOCALE/`. It's safe to add new locales and add translations into there. New locale must have all the same translations as English one, since English is used as base.
+
+Location files are loaded to memory when backend starts, so editing location files requires restart.
+
+Default locale is configurable in `/config/app.js`
+
+Read more about localization in https://adonisjs.com/docs/4.1/internationalization
