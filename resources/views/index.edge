@@ -6,11 +6,9 @@
 <meta name='Resource-type' content='Document' />
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 {{ style('/css/app') }}
-<link rel='stylesheet' type='text/css' href='css/jelpi.css' />
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap' rel='stylesheet'>
 </head>
 <body>
-{{ script('/js/app') }}
 <menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><div><a href='.'><table><td>Get Help</td></table></a><a href='#givehelp'><table><td>Give Help</td></table></a><a href='#safety'><table><td>Safety</td></table></a><a href='#about'><table><td>About</td></table></a></div></menu>
 <table class='section gethelp' id='section0'>
   <tr>
@@ -28,7 +26,6 @@
       <form>
         <inputwrap><input type='text'><fx1></fx1><fx2></fx2><placeholder>My name</placeholder></inputwrap>
         <inputwrap><input type='text'><fx1></fx1><fx2></fx2><placeholder>My location</placeholder></inputwrap>
-        <inputwrap><input type='text'><fx1></fx1><fx2></fx2><placeholder>My status</placeholder></inputwrap>
         <inputwrap><button id='cancel' class='action'>Cancel</button><fx1></fx1><fx2></fx2></inputwrap>
         <inputwrap><button id='send' class='action'>Send</button><fx1></fx1><fx2></fx2></inputwrap>
       </form>
@@ -56,6 +53,6 @@
     </td>
   </tr>
 </table>
-<script type='text/javascript' src='js/jelpi.js'></script>
+{{ script('/js/app') }}
 </body>
 </html>
