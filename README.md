@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://eka.to"><img src="https://github.com/eka-foundation/jelpi/blob/master/jelpi_logo.svg" alt="Jelpi" width="200"></a>
+  <a href="http://eka.to"><img src="https://github.com/eka-foundation/jelpi/blob/master/public/img/jelpi_logo.svg" alt="Jelpi" width="200"></a>
   <br>
 </h1>
 
