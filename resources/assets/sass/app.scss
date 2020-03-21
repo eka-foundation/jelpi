@@ -117,6 +117,10 @@ menu {
   transition: opacity 500ms;
   transition-delay: 350ms;
 }
+menu a:nth-child(3),
+menu a:nth-child(4) {
+  display: none;
+}
 @media ( min-width: 701px ){
   menu:before {
     content: '';
@@ -542,6 +546,7 @@ body:not(.located) form > inputwrap.location > span {
   content: '...';
   position: absolute;
 }*/
+askslocating:before,
 form > inputwrap.location placeholder.busy:before {
   content: '';
   display: inline-block;
@@ -597,7 +602,7 @@ body:not(.located) #send {
 asks {
   display: block;
   width: 90%;
-  max-width: 1100px;
+  max-width: 950px;
   margin: 0 auto;
   text-align: left;
 }
@@ -636,13 +641,12 @@ ask > div {
 }
 @media ( min-width: 901px ){
   ask {
-    width: 50%;
+    padding-top: 17px;
+    padding-bottom: 15px;
   }
-  ask:nth-child(2n-1) {
-    border-right: solid 1px #eee;
-  }
-  ask:nth-last-child(2) {
-    border-bottom: none;
+  ask > div {
+    display: inline-block;
+    width: 45%;
   }
 }
 @media ( max-width: 390px ){
@@ -684,22 +688,43 @@ ask.typeSupplies askicon {
   color: #1A7EDA;
 }
 askicon {}
-askdistance {}
-askdistance:after {
+@media( min-width: 901px ){
+  askdistance {
+    display: inline-block;
+    min-width: 80px;
+  }
+}
+askdelay:before {
   content: '/';
   margin: 0 7px;
   opacity: .2;
 }
+@media( min-width: 901px ){
+  askdelay:before {
+    margin-right: 40px;
+  }
+}
 askdelay {}
 askdelay:after {}
-asktype {}
-asktype:after {
+@media ( min-width: 901px ){
+  asktype {
+    display: inline-block;
+    min-width: 110px;
+  }
+}
+askdate {}
+askdate:before {
   content: '·';
   opacity: .4;
   margin: 0 10px;
 }
-askdate {}
+@media ( min-width: 901px ){
+  askdate:before {
+    display: none;
+  }
+}
 askcontactbutton {
+  cursor: pointer;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -711,6 +736,8 @@ askcontactbutton {
   font-weight: 400;
   letter-spacing: 0;
 }
+askcontactbutton::-moz-selection     { background: transparent; }
+askcontactbutton::selection          { background: transparent; }
 @media ( max-width: 390px ){
   askcontactbutton {
     font-size: 14px;
@@ -720,8 +747,19 @@ askcontactbutton {
 }
 
 
+
+
+body.located askslocating {
+  display: none;
+}
+
+
+
+
+
 asksfilterstoggler {
   cursor: pointer;
+  display: none;
 }
 @media ( max-width: 700px ){
   asksfilterstoggler {
@@ -748,6 +786,7 @@ body.asksfiltersopen asks {
 }
 asksfilters {
   display: block;
+  display: none;
 }
 @media ( max-width: 700px ){
   asksfilters {

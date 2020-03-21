@@ -12,7 +12,7 @@ Jelpi.helper = {
     return false;
   },
   isTest: () => {
-    // return false;
+    return false;
     return /^https?:\/\/127\.0\.0\.1/.test( location.href );
   },
   crowFlightBetweenCoordinates: (a, b) => {
@@ -111,20 +111,25 @@ Jelpi.main = class {
     };
     // mock = null;
     let onError = () => {
+      console.log('Location detection failed.');
       callback(null);
     },
     onSuccess = (locationResult) => {
+      document.body.classList.add('located');
       // l('locationResult3');
+      console.log( locationResult.coords );
       this.location = locationResult;
       callback( this.location );
     };
     if( Jelpi.helper.isTest() ){
-      setTimeout(() => { mock ? onSuccess(mock) : onError(); }, 700);
+      console.log('Location is mock location.');
+      setTimeout(() => { mock ? onSuccess(mock) : onError(); }, 1000);
       return;
     }
     if( !navigator.geolocation ){
       onError();
     } else {
+      console.log('Locating using HTML5 API.');
       navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
   }
@@ -152,7 +157,7 @@ Jelpi.asks = class {
     for(let i = 0; i < 100; i++){
       this.data.push({
         type: randomType(),
-        timeStamp: Date.now() - Math.random() * 1000 * 60 * 60 * 4 - 1000 * 60 * 60 * 24 * 10 * 0,
+        timeStamp: Date.now() - Math.random() * 1000 * 60 * 60 * 48 - 1000 * 60 * 60 * 24 * 10 * 0,
         latitude: 61.92410999999999 + ( ( Math.random() - .5 ) * 2 ),
         longitude: 25.748151 + ( ( Math.random() - .5 ) * 2 ),
       });
@@ -173,7 +178,7 @@ Jelpi.asks = class {
     ask.match() && this.array.push( ask );
   }
   sort() {
-    l('SORT');
+    // l('SORT');
   }
 }
 Jelpi.asksFilters = class {
@@ -257,7 +262,7 @@ Jelpi.ask = class {
   }
   match() {
     let filter = this.parent.filter;
-    l('FILTER');
+    // l('FILTER');
     return true;
   }
   destroy() {
@@ -348,9 +353,11 @@ Jelpi.askDelay = class {
       return `${Math.round( hours )}h ago`;
     }
     if( days < 365 / 12 ){
-      return `${Math.round( days )}days ago`;
+      days = Math.round( days );
+      return `${days} day${days > 1 ? 's' : '' } ago`;
     }
-    return `${Math.round( months )}months ago`;
+    months = Math.round( months );
+    return `${months} month${months > 1 ? 's' : '' } ago`;
   }
   element() {
     if( this.hasOwnProperty('_element') ){
@@ -421,7 +428,7 @@ Jelpi.askContactButton = class {
     this.parent.element().appendChild( this.element() );
   }
   onClick() {
-    l('click');
+    l('CONTACT');
   }
   element() {
     if( this.hasOwnProperty('_element') ){
@@ -547,7 +554,6 @@ Jelpi.frontPage = class {
     if( !locationResult ){
       return this.destroy();
     }
-    document.body.classList.add('located');
     let input = this.inputs.array.filter(input => { return input.element.classList.contains('location'); })[0];
     input.element.classList.add('focus');
   }
