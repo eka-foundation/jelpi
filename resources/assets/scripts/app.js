@@ -150,23 +150,27 @@ Jelpi.asks = class {
   }
   init() {
     this.filters.init();
-    let randomType = () => {
-      let needs = [ 'Food', 'Medicine', 'Supplies' ];
-      return needs[ Math.floor( Math.random() * needs.length ) ];
-    }
-    for(let i = 0; i < 100; i++){
-      this.data.push({
-        type: randomType(),
-        timeStamp: Date.now() - Math.random() * 1000 * 60 * 60 * 48 - 1000 * 60 * 60 * 24 * 10 * 0,
-        latitude: 61.92410999999999 + ( ( Math.random() - .5 ) * 2 ),
-        longitude: 25.748151 + ( ( Math.random() - .5 ) * 2 ),
-      });
-    }
   }
   update() {
     this.parent.locate( this.render.bind(this) );
   }
   render(locationResult) {
+    let randomType = () => {
+      let needs = [ 'Food', 'Medicine', 'Supplies' ];
+      return needs[ Math.floor( Math.random() * needs.length ) ];
+    },
+    randomLocationDelta = () => {
+      let random = Math.pow( Math.random(), 10 );
+      return random * ( Math.random() < .5 ? -1 : 1 );
+    };
+    for(let i = 0; i < 100; i++){
+      this.data.push({
+        type: randomType(),
+        timeStamp: Date.now() - Math.random() * 1000 * 60 * 60 * 48 - 1000 * 60 * 60 * 24 * 10 * 0,
+        latitude: locationResult.coords.latitude + randomLocationDelta(),
+        longitude: locationResult.coords.longitude + randomLocationDelta(),
+      });
+    }
     this.array.map(ask => { ask.destroy() });
     this.array = [];
     this.data.map( this.initAsk.bind(this, locationResult) );
@@ -178,7 +182,15 @@ Jelpi.asks = class {
     ask.match() && this.array.push( ask );
   }
   sort() {
-    // l('SORT');
+    let calculateDistance = (coordinates) => {
+      return Jelpi.helper.crowFlightBetweenCoordinates( this.parent.location.coords, coordinates );
+    },
+    compareDistance = (a, b) => {
+      let aDistance = calculateDistance( a.properties ),
+      bDistance = calculateDistance( b.properties );
+      return aDistance - bDistance;
+    };
+    this.array.sort( compareDistance );
   }
 }
 Jelpi.asksFilters = class {
