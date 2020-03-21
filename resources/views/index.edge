@@ -6,7 +6,7 @@
 <meta name='Resource-type' content='Document' />
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 {{ style('/css/app') }}
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i&display=swap" rel="stylesheet">
 </head>
 <body>
 <menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>Get Help</td></table></a><a href='#givehelp'><table><td>Give Help</td></table></a><a href='#safety'><table><td>Safety</td></table></a><a href='#about'><table><td>About</td></table></a></td></table></menu>
@@ -37,6 +37,28 @@
   <tr>
     <td>
       <h1>Give Help</h1>
+      <askslocating>Locating...</askslocating>
+      <asksfilterstoggler>Filters<icon>&#9651;</icon></asksfilterstoggler>
+      <asksfilters>
+        <div>
+          Categories
+          <label>
+            <switch></switch>
+            Show medical
+          </label>
+          <label>
+            <switch></switch>
+            Show food
+          </label>
+          <label>
+            <switch></switch>
+            Show supplies
+          </label>
+          Maximum distance
+          <distance></distance>
+          <slider></slider>
+        </div>
+      </asksfilters>
       <asks>
       </asks>
     </td>

@@ -117,6 +117,24 @@ menu {
   transition: opacity 500ms;
   transition-delay: 350ms;
 }
+menu a:nth-child(3),
+menu a:nth-child(4) {
+  display: none;
+}
+@media ( min-width: 701px ){
+  menu:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100px;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(white, transparent);
+  }
+}
 menu table {
   border-collapse: collapse;
 }
@@ -232,6 +250,7 @@ body.page-about menu a[href="#about"] {
 
 h1 {
   font-weight: normal;
+  margin-top: 70px;
 }
 body > .section {
   display: none;
@@ -288,7 +307,7 @@ needs > div {
   text-align: center;
   color: white;
   cursor: pointer;
-  transition: background-color 1s cubic-bezier(0,1,0,1), opacity 200ms cubic-bezier(1,0,1,0), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(.2,0,.4,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 300ms;
+  transition: background-color 1s cubic-bezier(0,1,0,1), opacity 200ms cubic-bezier(1,0,1,0), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(0,.2,0,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 300ms;
   width: 200px;
   height: 100px;
   font-size: 20px;
@@ -296,7 +315,7 @@ needs > div {
   margin-right: auto;
   max-width: 400px;
 }
-@media ( max-width: 500px ){ needs > div { transition: background-color 1s cubic-bezier(0,1,0,1), opacity 200ms cubic-bezier(1,0,1,0), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(.2,0,.4,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 300ms; } }
+@media ( max-width: 500px ){ needs > div { transition: background-color 1s cubic-bezier(0,1,0,1), opacity 200ms cubic-bezier(1,0,1,0), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(0,.2,0,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 300ms; } }
 @media ( min-width: 501px ){ needs > div { display: inline-block; margin-left: 0; margin-right: 0; } }
 needs table {
   border-collapse: collapse;
@@ -325,23 +344,22 @@ needs > div:not(:first-child):before {
 @media ( max-width: 500px ){ needs > div { border-radius: 10px; } needs > div:not(:first-child):before { display: none; } body:not(.need) needs > div:not(:first-child) { margin-top: 2px; } }
 needs > div:hover {
   background-color: rgba(0,0,0,.8);
-  transition: opacity 400ms cubic-bezier(0,1,0,1), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(.2,0,.4,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 1s;
+  transition: opacity 400ms cubic-bezier(0,1,0,1), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(0,.2,0,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 1s;
 }
 needs > div:active {
   background-color: rgba(0,0,0,.7);
-  transition: opacity 400ms cubic-bezier(0,1,0,1), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(.2,0,.4,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 1s;
+  transition: opacity 400ms cubic-bezier(0,1,0,1), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(0,.2,0,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 1s;
 }
 needs td {
   padding: 0;
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  /*transition: width 500ms cubic-bezier(.2,0,.4,1);*/
 }
 needs td::-moz-selection     { background: transparent; }
 needs td::selection          { background: transparent; }
 needs > .hidden {
-  transition: background-color 1s cubic-bezier(0,1,0,1), opacity 400ms cubic-bezier(0,1,0,1), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(.2,0,.4,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 1s;
+  transition: background-color 1s cubic-bezier(0,1,0,1), opacity 400ms cubic-bezier(0,1,0,1), margin 500ms cubic-bezier(1,0,0,1), width 500ms cubic-bezier(0,.2,0,1), height 200ms, font-size 300ms cubic-bezier(.2,0,.4,1), border-radius 1s;
   opacity: 0;
 }
 @media ( max-width: 600px ) and ( min-width: 501px ){ needs > div     { width: 33.3%; } }
@@ -528,6 +546,7 @@ body:not(.located) form > inputwrap.location > span {
   content: '...';
   position: absolute;
 }*/
+askslocating:before,
 form > inputwrap.location placeholder.busy:before {
   content: '';
   display: inline-block;
@@ -556,9 +575,9 @@ body:not(.located) form > inputwrap.location placeholder.done {
                     #cancel ~ fx2  { background: #d66; }
 inputwrap.mousedown #cancel ~ fx2  { background: #933; }
 
-                    #send          { color: #3b9859; }
-                    #send:hover    { color: #4eba71; }
-                    #send:active   { color: #2f7a47; }
+                    #send       , askcontactbutton        { color: #3b9859; }
+                    #send:hover , askcontactbutton:hover  { color: #4eba71; }
+                    #send:active, askcontactbutton:active { color: #2f7a47; }
                     #send   ~ fx1  { background: #3b9859; }
                     #send   ~ fx2  { background: #3b9859; }
 inputwrap.mousedown #send   ~ fx2  { background: #2f7a47; }
@@ -572,53 +591,241 @@ body:not(.located) #send {
 
 
 
-arrowdown {
-  position: absolute;
+
+
+
+
+
+
+
+
+asks {
   display: block;
-  left: 50%;
-  bottom: 0;
-  width: 90px;
-  height: 90px;
-  margin-left: -45px;
-  transform: scale(1,.62);
-  transform-origin: 50% 100%;
-  cursor: pointer;
-  transition: opacity 900ms;
+  width: 90%;
+  max-width: 950px;
+  margin: 0 auto;
+  text-align: left;
 }
-arrowdown:before {
-  content: '';
-  display: block;
-  position: absolute;
-  pointer-events: none;
-  width: 20%;
-  height: 20%;
-  left: 40%;
-  top: 40px;
-  transform: rotate(45deg);
+@media ( max-width: 900px ){
+  asks {
+    max-width: 500px;
+    width: auto;
+  }
+}
+ask {
+  display: inline-block;
+  width: 100%;
+  position: relative;
   box-sizing: border-box;
-  border-bottom: solid 1px black;
-  border-right: solid 1px black;
-  opacity: .5;
-  transition: top 100ms;
+  padding: 20px 50px;
+  border-bottom: solid 1px #eee;
+  font-size: 13px;
+  letter-spacing: .02em;
+  color: #777;
 }
-arrowdown:hover:before {
-  opacity: .8;
-  top: 44px;
-  transition: top 100ms;
+ask:last-child {
+  border-bottom: none;
+  margin-bottom: 100px;
 }
-arrowdown:active:before {
-  opacity: 1;
-  top: 48px;
-  transition: top 100ms;
+ask > div {
+  color: #333;
+  font-size: 19px;
+  font-weight: 300;
+  letter-spacing: 0;
+  margin-bottom: 5px;
 }
-body.need arrowdown,
-arrowdown.removing {
-  opacity: 0;
+@media( max-width: 390px ){
+  ask > div {
+    font-size: 16px;
+  }
+}
+@media ( min-width: 901px ){
+  ask {
+    padding-top: 17px;
+    padding-bottom: 15px;
+  }
+  ask > div {
+    display: inline-block;
+    width: 45%;
+  }
+}
+@media ( max-width: 390px ){
+  ask {
+    font-size: 12px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+@media( max-width: 350px ){
+  ask {
+    padding: 15px 25px;
+  }
+}
+@media( max-width: 320px ){
+  ask {
+    font-size: 11px;
+  }
+}
+askicon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 2px;
+  margin-right: 8px;
+}
+ask.typeFood asktype,
+ask.typeFood askicon {
+  color: #3b9859;
+}
+ask.typeMedicine asktype,
+ask.typeMedicine askicon {
+  color: #b44;
+}
+ask.typeSupplies asktype,
+ask.typeSupplies askicon {
+  color: #1A7EDA;
+}
+askicon {}
+@media( min-width: 901px ){
+  askdistance {
+    display: inline-block;
+    min-width: 80px;
+  }
+}
+askdelay:before {
+  content: '/';
+  margin: 0 7px;
+  opacity: .2;
+}
+@media( min-width: 901px ){
+  askdelay:before {
+    margin-right: 40px;
+  }
+}
+askdelay {}
+askdelay:after {}
+@media ( min-width: 901px ){
+  asktype {
+    display: inline-block;
+    min-width: 110px;
+  }
+}
+askdate {}
+askdate:before {
+  content: '·';
+  opacity: .4;
+  margin: 0 10px;
+}
+@media ( min-width: 901px ){
+  askdate:before {
+    display: none;
+  }
+}
+askcontactbutton {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 7px 10px;
+  border: solid 2px;
+  border-radius: 10px;
+  right: 30px;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+askcontactbutton::-moz-selection     { background: transparent; }
+askcontactbutton::selection          { background: transparent; }
+@media ( max-width: 390px ){
+  askcontactbutton {
+    font-size: 14px;
+    padding: 8px 9px;
+    right: 20px;
+  }
+}
+
+
+
+
+body.located askslocating {
+  display: none;
+}
+
+
+
+
+
+asksfilterstoggler {
+  cursor: pointer;
+  display: none;
+}
+@media ( max-width: 700px ){
+  asksfilterstoggler {
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 23px 30px;
+    box-sizing: border-box;
+    height: 65px;
+    z-index: 1001;
+  }
+}
+asksfilterstoggler icon {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: -3px;
+  transition: transform 200ms;
+}
+body.asksfiltersopen icon {
+  transform: rotate(-60deg);
+}
+body.asksfiltersopen asks {
   pointer-events: none;
 }
-@media ( max-height: 480px ){
-  arrowdown {
+asksfilters {
+  display: block;
+  display: none;
+}
+@media ( max-width: 700px ){
+  asksfilters {
     opacity: 0;
     pointer-events: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(240,240,240,.8);
+    z-index: 1000;
+    transition: opacity 100ms;
+  }
+  body.asksfiltersopen asksfilters {
+    opacity: 1;
+    pointer-events: all;
+  }
+  asksfilters > div {
+    background-color: white;
+    border-radius: 10px;
+    right: 30px;
+    margin-left: 30px;
+    top: 65px;
+    position: absolute;
+    box-shadow:
+      0 1px 0 0 rgba(0,0,0,.1),
+      0 1px 5px 0 rgba(0,0,0,.1),
+      0 1px 50px 0 rgba(0,0,0,.1)
+    ;
+  }
+}
+@media ( min-width: 701px ){
+  asksfilters {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms;
+  }
+  body.asksfiltersopen asksfilters {
+    max-height: 300px;
   }
 }
