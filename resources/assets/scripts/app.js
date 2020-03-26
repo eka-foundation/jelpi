@@ -12,7 +12,7 @@ Jelpi.helper = {
     return false;
   },
   isTest: () => {
-    // return false;
+    return false;
     return /^https?:\/\/(127\.0\.0\.1|192\.168\.43\.25)/.test( location.href );
   },
   crowFlightBetweenCoordinates: (a, b) => {
