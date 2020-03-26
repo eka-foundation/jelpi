@@ -211,12 +211,13 @@ body.page-about menu a[href="#about"] {
     top: 0;
     width: 70px;
     height: 65px;
+    opacity: .7;
   }
   menu hamburger slice {
     display: block;
     height: 3px;
     width: 20px;
-    background: rgba(0,0,0,.9);
+    background: black;
     position: absolute;
     left: 15px;
     transition: top 120ms ease-out, transform 120ms ease-out;
