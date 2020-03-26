@@ -12,8 +12,8 @@ Jelpi.helper = {
     return false;
   },
   isTest: () => {
-    return false;
-    return /^https?:\/\/127\.0\.0\.1/.test( location.href );
+    // return false;
+    return /^https?:\/\/(127\.0\.0\.1|192\.168\.43\.25)/.test( location.href );
   },
   crowFlightBetweenCoordinates: (a, b) => {
     let getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
@@ -86,6 +86,7 @@ Jelpi.main = class {
     this.frontPage = new Jelpi.frontPage(this);
     this.menu = new Jelpi.menu(this);
     this.asks = new Jelpi.asks(this);
+    this.safety = new Jelpi.safety(this);
   }
   init() {
     this.frontPage.init();
@@ -138,6 +139,51 @@ Jelpi.main = class {
     let body = document.body,
     classname = value.length ? ` page-${value}` : ' ';
     body.className = body.className.replace( /(^|\s)page-[^\s]+|$/, classname );
+  }
+}
+Jelpi.safety = class {
+  constructor(parent) {
+    let slider = $('.owl-carousel').owlCarousel({
+      nav: true,
+      items: 1,
+      margin: 10,
+      // navText: [ '<div class="owl-arrow owl-arrow--left">&lt;</div>', '<div class="owl-arrow owl-arrow--right">&gt;</div>' ],
+      // navClass: ['owl-prev', 'owl-next'],
+      autoHeight: true,
+      responsive: {
+         0: {
+             items: 1
+         },
+         600: {
+             items: 3
+         },
+         1000: {
+             items: 3
+         }
+      },
+      // nav: false,
+      navText: [
+        '<span aria-label="' + 'Previous' + '">&#x2039;</span>',
+        '<span aria-label="' + 'Next' + '">&#x203a;</span>'
+      ],
+      navSpeed: false,
+      navElement: 'button type="button" role="presentation"',
+      navContainer: false,
+      navContainerClass: 'owl-nav',
+      navClass: [
+        'owl-prev',
+        'owl-next'
+      ],
+      slideBy: 1,
+      dotClass: 'owl-dot',
+      dotsClass: 'owl-dots',
+      dots: true,
+      dotsEach: false,
+      dotsData: false,
+      dotsSpeed: false,
+      dotsContainer: false
+    });
+    // l(slider);
   }
 }
 Jelpi.asks = class {

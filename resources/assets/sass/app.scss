@@ -117,7 +117,7 @@ menu {
   transition: opacity 500ms;
   transition-delay: 350ms;
 }
-menu a:nth-child(3),
+/*menu a:nth-child(3),*/
 menu a:nth-child(4) {
   display: none;
 }
@@ -212,29 +212,29 @@ body.page-about menu a[href="#about"] {
   }
   menu hamburger slice {
     display: block;
-    height: 5px;
-    width: 30px;
+    height: 3px;
+    width: 20px;
     background: rgba(0,0,0,.9);
     position: absolute;
-    left: 20px;
-    transition: top 100ms, transform 100ms;
+    left: 15px;
+    transition: top 120ms ease-out, transform 120ms ease-out;
   }
   menu hamburger slice:first-child {
-    top: 20px;
+    top: 15px;
   }
   menu hamburger slice:nth-child(2) {
-    top: 30px;
+    top: 22px;
   }
   menu hamburger slice:last-child {
-    top: 40px;
+    top: 29px;
   }
   body.menuOpen menu hamburger slice {
     transform: rotate(-45deg);
-    top: 30px;
+    top: 22px;
   }
   body.menuOpen menu hamburger slice:first-child {
     transform: rotate(45deg);
-    top: 30px;
+    top: 22px;
   }
 }
 @media ( max-width: 700px ) and ( min-height: 301px ){
@@ -255,12 +255,8 @@ h1 {
 body > .section {
   display: none;
   text-align: center;
-}
-body > .section p {
-  display: block;
-  width: 70%;
-  max-width: 400px;
-  margin: 0 auto 30px auto;
+  /*width:100%;*/
+  table-layout: fixed;
 }
 body:not([class*="page-"]) > .section.gethelp,
 body.page-givehelp > .section.givehelp,
@@ -268,26 +264,17 @@ body.page-safety > .section.safety,
 body.page-about > .section.about {
   display: table;
 }
-
-
-
-
-
-img.hands {
-  left: 50%;
-  width: 100px;
-  margin-left: -50px;
-  margin-top: -30px;
-  display: block;
-  position: absolute;
-  transform: scale(.8);
-  transition: transform 200ms cubic-bezier(.2,0,.4,1);
-  transform-origin: 50% 0;
+body > .section > tbody > tr > td {
+  vertical-align: top;
 }
-@media ( max-height: 300px ){ body.need img.hands { opacity: 0; } }
-body.need img.hands {
-  transform: none;
+body > .section.gethelp > tbody > tr > td {
+  vertical-align: middle;
 }
+
+
+
+
+
 
 
 
@@ -302,7 +289,6 @@ needs {
 }
 needs > div {
   position: relative;
-  vertical-align: top;
   background-color: rgba(0,0,0,.9);
   text-align: center;
   color: white;
@@ -829,4 +815,105 @@ asksfilters {
   body.asksfiltersopen asksfilters {
     max-height: 300px;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.owl-controls {
+  position: absolute;
+  top: 260px;
+  left: 0;
+  right: 0;
+}
+.owl-item > .item {
+  padding-bottom: 50px;
+}
+.owl-item > .item > img {
+  max-height: 200px;
+  max-width: 100%;
+  margin-bottom: 30px;
+}
+.owl-theme .owl-controls .owl-page span {
+  background-color: black;
+  width: 8px;
+  height: 8px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: .2;
+}
+.owl-item p, do, dont {
+  display: block;
+  padding: 0;
+  text-align: left;
+  font-weight: 300;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto 13px auto;
+}
+do,
+dont {
+  display: block;
+  position: relative;
+  left: 30px;
+  font-weight: 400;
+  color: green;
+}
+dont {
+  color: red;
+  margin-top: 25px;
+}
+do:before,
+dont:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: solid 3px green;
+  left: -30px;
+  transform: scale(.5,.5);
+  transform-origin: 0 0;
+}
+dont:before {
+  border-color: red;
+}
+do:after {
+  content: '';
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: 10px;
+  height: 20px;
+  left: -19px;
+  top: 3px;
+  box-sizing: border-box;
+  border-bottom: solid 3px green;
+  border-right: solid 3px green;
+  transform: scale(.5,.5) rotate(45deg) skew(8deg);
+  transform-origin: 0 0;
+}
+dont:after {
+  content: '';
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: 0;
+  height: 35px;
+  left: -15px;
+  top: 3px;
+  box-sizing: border-box;
+  border-right: solid 3px red;
+  transform: scale(.47,.47) rotate(45deg);
+  transform-origin: 0 0;
 }
