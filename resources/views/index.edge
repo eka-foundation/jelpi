@@ -5,8 +5,10 @@
 <title>{{ antl.formatMessage('main.title') }}</title>
 <meta name='Resource-type' content='Document' />
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
-{{ style('/css/app') }}
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/tiny-slider.css" rel="stylesheet">
+{{ style('/css/app') }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
 </head>
 <body>
 <menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>Get Help</td></table></a><a href='#givehelp'><table><td>Give Help</td></table></a><a href='#safety'><table><td>Safety</td></table></a><a href='#about'><table><td>About</td></table></a></td></table></menu>
@@ -68,12 +70,9 @@
   <tr>
     <td>
       <h1>Safety</h1>
-      <div>Use protective gear</div>
-      <div>Minimize surface contact</div>
-      <div>Keep physical distance with people</div>
-      <div>Minimize leaving home</div>
-      <div>Know your facts</div>
-      <div>Quarantine immediately if in doubt</div>
+      <safetymenu></safetymenu>
+      <div class="tinySlider">
+      </div>
     </td>
   </tr>
 </table>

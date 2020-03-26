@@ -13,7 +13,7 @@ Jelpi.helper = {
   },
   isTest: () => {
     return false;
-    return /^https?:\/\/127\.0\.0\.1/.test( location.href );
+    return /^https?:\/\/(127\.0\.0\.1|192\.168\.43\.25)/.test( location.href );
   },
   crowFlightBetweenCoordinates: (a, b) => {
     let getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
@@ -86,11 +86,13 @@ Jelpi.main = class {
     this.frontPage = new Jelpi.frontPage(this);
     this.menu = new Jelpi.menu(this);
     this.asks = new Jelpi.asks(this);
+    this.safety = new Jelpi.safety(this);
   }
   init() {
     this.frontPage.init();
     this.menu.init();
     this.asks.init();
+    this.safety.init();
   }
   locate(callback) {
     if( this.hasOwnProperty('location') ){
@@ -134,10 +136,134 @@ Jelpi.main = class {
     }
   }
   page(value) {
-    value === 'givehelp' && this.asks.update();
+    switch( value ){
+      case 'givehelp':
+        this.asks.update();
+        break;
+      case 'safety':
+        this.safety.hideSlider()
+        break;
+    }
     let body = document.body,
     classname = value.length ? ` page-${value}` : ' ';
     body.className = body.className.replace( /(^|\s)page-[^\s]+|$/, classname );
+  }
+}
+Jelpi.safety = class {
+  constructor(parent) {
+    this.slides = [
+      { heading: 'Use Protective Gear',
+        image: 'img/placeholder1.png',
+        do: [
+          'Use facemasks if you have them available.',
+          'Use disposable gloves, but only if you know how to use them the proper way and for one-time usage.',
+          'Learn the proper ways to use them, do not touch your face with your hands or gloves.',
+          'If you do not have gloves, use eg. paper tissues for touching handles, etc. and throw them away after 1 use.',
+          'If you do not have facemasks, use e.g. scarf in front of your mouth.',
+        ],
+        dont: [
+          'Hoard for protection and thus deny it from others.',
+          'Use disposable gloves long and thus spread the virus to many places.',
+          'Touch your eyes of mouth when positioning your facemask or scarf.',
+        ]
+      },
+      { heading: 'Minimize Surface Contact',
+        image: 'img/placeholder1.png',
+        do: [
+          'Avoid touching things outside your home.',
+          'Especially avoid touching the same things as many other people do: handles, shopping trolleys, etc.',
+          'Wear one-time protection (gloves or paper tissues) when you have to touch something.',
+        ],
+        dont: [
+          'When coming to the home, use hands (or dirty gloves) to touch door handles before you have washed your hands.'
+        ]
+      },
+      { heading: 'Keep Physical Distance With People',
+        image: 'img/placeholder1.png',
+        do: [],
+        dont: []
+      },
+      { heading: 'Minimize Leaving Home',
+        image: 'img/placeholder1.png',
+        do: [],
+        dont: []
+      },
+      { heading: 'Know Your Facts',
+        image: 'img/placeholder1.png',
+        do: [],
+        dont: []
+      },
+      { heading: 'Quarantine Immediately if in Doubt',
+        image: 'img/placeholder1.png',
+        do: [],
+        dont: []
+      }
+    ];
+  }
+  hideSlider() {
+    document.body.classList.remove('safetySliderVisible');
+  }
+  showSlider() {
+    this.slider();
+    document.body.classList.add('safetySliderVisible');
+  }
+  init() {
+    this.slides.map( this.makeSlide.bind(this) );
+  }
+  makeSlide(object, index) {
+    this.makeSafetyMenuItem(object.heading, index);
+    this.makeTinySliderItem(object);
+  }
+  makeSafetyMenuItem(heading, index) {
+    let safetyMenu = document.querySelector('safetymenu');
+    let element = document.createElement('div');
+    element.addEventListener('click', this.onMenuClick.bind(this, index));
+    element.innerText = heading;
+    safetyMenu.appendChild( element );
+  }
+  onMenuClick(index, event) {
+    this.showSlider();
+    this.slider().goTo(index);
+  }
+  makeTinySliderItem(object) {
+    let outerWrapper = document.querySelector('.tinySlider'),
+    innerWrapper = document.createElement('div'),
+    heading = document.createElement('h3'),
+    image = document.createElement('img'),
+    imageWrapper = document.createElement('imagewrapper'),
+    doSubHeading = document.createElement('do'),
+    dontSubHeading = document.createElement('dont'),
+    makeParagraph = (text) => {
+      let paragraph = document.createElement('p');
+      paragraph.innerText = text;
+      innerWrapper.appendChild( paragraph );
+    };
+
+    doSubHeading.innerText = 'Do';
+    dontSubHeading.innerText = 'Do Not';
+    innerWrapper.classList.add('item');
+    outerWrapper.appendChild( innerWrapper );
+    heading.innerText = object.heading;
+    image.setAttribute('src', object.image);
+    imageWrapper.appendChild( image );
+    innerWrapper.appendChild( heading );
+    innerWrapper.appendChild( imageWrapper );
+    innerWrapper.appendChild( doSubHeading );
+    object.do.map(makeParagraph);
+    innerWrapper.appendChild( dontSubHeading );
+    object.do.map(makeParagraph);
+  }
+  slider() {
+    if( this.hasOwnProperty('_slider') ){
+      return this._slider;
+    }
+    this._slider = tns({
+      container: '.tinySlider',
+      items: 1,
+      slideBy: 'page',
+      autoplay: false
+    });
+    return this._slider;
   }
 }
 Jelpi.asks = class {
@@ -527,6 +653,7 @@ Jelpi.menuItem = class {
     this.page = this.element.getAttribute('href').substr(1);
   }
   onClick(event) {
+    window.scrollTo(0,0);
     if( !this.page.length ){
       event.preventDefault();
       Jelpi.helper.pushEmptyURL();
