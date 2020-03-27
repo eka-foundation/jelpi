@@ -4,52 +4,59 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/** @type {import("../../Models/HelpRequest")} */
-const HelpRequest = use('App/Models/HelpRequest');
+/** @type {import("../../Models/Task")} */
+
+const Task = use('App/Models/Task');
 
 /**
- * Resourceful controller for interacting with helprequests
+ * Resourceful controller for interacting with Tasks
  */
-class HelpRequestController {
+class TaskController {
   /**
-   * Show a list of all helprequests.
-   * GET helprequests
+   * Show a list of all Tasks.
+   * GET Tasks
    *
    * @param {object} ctx
    * @param {View} ctx.view
    */
   async index({ view }) {
-    let requests = HelpRequest.all()
-    return view.render('requests', requests)
+    let tasks = Task.all()
+    return view.render('tasks', tasks)
   }
 
   /**
-   * Render a form to be used for creating a new helprequest.
-   * GET helprequests/create
+   * Render a form to be used for creating a new Task.
+   * GET Tasks/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create({ request, response, view }) {
   }
 
   /**
-   * Create/save a new helprequest.
-   * POST helprequests
+   * Create/save a new Task.
+   * POST Tasks
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-
+    console.log(request);
+    const task = new Task();
+    task.name = request.input("name");
+    task.lat = request.input("lat");
+    task.lng = request.input("lng");
+    task.category = request.input("category");
+    await task.save();
   }
 
   /**
-   * Display a single helprequest.
-   * GET helprequests/:id
+   * Display a single Task.
+   * GET Tasks/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -60,8 +67,8 @@ class HelpRequestController {
   }
 
   /**
-   * Render a form to update an existing helprequest.
-   * GET helprequests/:id/edit
+   * Render a form to update an existing Task.
+   * GET Tasks/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -72,8 +79,8 @@ class HelpRequestController {
   }
 
   /**
-   * Update helprequest details.
-   * PUT or PATCH helprequests/:id
+   * Update Task details.
+   * PUT or PATCH Tasks/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -83,8 +90,8 @@ class HelpRequestController {
   }
 
   /**
-   * Delete a helprequest with id.
-   * DELETE helprequests/:id
+   * Delete a Task with id.
+   * DELETE Tasks/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -94,4 +101,4 @@ class HelpRequestController {
   }
 }
 
-module.exports = HelpRequestController
+module.exports = TaskController
