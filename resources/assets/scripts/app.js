@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 window.l = console.log;
 let Jelpi = {};
 Jelpi.helper = {
@@ -289,19 +291,24 @@ Jelpi.asks = class {
       let random = Math.pow( Math.random(), 10 );
       return random * ( Math.random() < .5 ? -1 : 1 );
     };
-    for(let i = 0; i < 100; i++){
-      this.data.push({
-        type: randomType(),
-        timeStamp: Date.now() - Math.random() * 1000 * 60 * 60 * 48 - 1000 * 60 * 60 * 24 * 10 * 0,
-        latitude: locationResult.coords.latitude + randomLocationDelta(),
-        longitude: locationResult.coords.longitude + randomLocationDelta(),
-      });
-    }
-    this.array.map(ask => { ask.destroy() });
-    this.array = [];
-    this.data.map( this.initAsk.bind(this, locationResult) );
-    this.sort();
-    this.array.map(ask => { ask.init() });
+    axios.get("/tasks").then(res => {
+      for (let i = 0; i <= res.data.length; i++) {
+        if (res.data[i]) {
+          this.data.push({
+            type: res.data[i].category,
+            timeStamp: res.data[i].created_at,
+            latitude:  res.data[i].lat,
+            longitude: res.data[i].lng,
+            fbid: res.data[i].fbid
+          });
+        }
+      }
+      this.array.map(ask => { ask.destroy() });
+      this.array = [];
+      this.data.map( this.initAsk.bind(this, locationResult) );
+      this.sort();
+      this.array.map(ask => { ask.init() });
+    });
   }
   initAsk(locationResult, properties) {
     let ask = new Jelpi.ask(this, properties, locationResult);
@@ -475,12 +482,12 @@ Jelpi.askDelay = class {
     return document.createTextNode( this.generateString() );
   }
   generateString() {
-    let diff = Date.now() - this.parent.properties.timeStamp,
-    seconds = diff / 1000,
-    minutes = seconds / 60,
-    hours = minutes / 60,
-    days = hours / 24,
-    months = days / 365 * 12;
+    let diff = Date.now() - Date.parse(this.parent.properties.timeStamp),
+      seconds = diff / 1000,
+      minutes = seconds / 60,
+      hours = minutes / 60,
+      days = hours / 24,
+      months = (days / 365) * 12;
     if( seconds < 59 ){
       return 'Right now';
     }
@@ -566,7 +573,10 @@ Jelpi.askContactButton = class {
     this.parent.element().appendChild( this.element() );
   }
   onClick() {
-    l('CONTACT');
+    if (this.parent.properties.fbid) {
+      window.open(`https://m.me/${this.parent.properties.fbid}`, "_blank");
+    }
+    l(`CONTACT FB ID: ${this.parent.properties.fbid} `);
   }
   element() {
     if( this.hasOwnProperty('_element') ){
@@ -815,11 +825,34 @@ Jelpi.sendButton = class {
     if( this.sending ){
       return;
     }
-    if( !this.parent.location ){
+    if (!this.parent.parent.location) {
       return;
     }
+    let nam = document.getElementById("ask-name").value;
+    let cat = document
+      .querySelector("needs > div:not(.hidden)")
+      .getAttribute("data-type");
     this.sending = true;
-    console.log('send');
+    axios
+      .post("/tasks", {
+        name: nam,
+        lat: this.parent.parent.location.coords.latitude,
+        lng: this.parent.parent.location.coords.longitude,
+        category: cat
+      })
+      .then((response) => {
+        console.log(response);
+        document.getElementById("ask-name").value = '';
+        this.parent.onCancel();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('Sorry! Something went wrong');
+      })
+      .then(() => {
+        this.sending = false;
+        console.log("sent");
+      });
   }
 }
 Jelpi.iCanHelpButton = class {
