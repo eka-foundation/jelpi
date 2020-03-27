@@ -21,7 +21,7 @@ class TaskController {
    */
   async index({ view }) {
     let tasks = Task.all()
-    return view.render('tasks', tasks)
+    return tasks
   }
 
   /**
@@ -45,12 +45,12 @@ class TaskController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-    console.log(request);
     const task = new Task();
     task.name = request.input("name");
     task.lat = request.input("lat");
     task.lng = request.input("lng");
     task.category = request.input("category");
+    task.fbid = '2957526370935693';
     await task.save();
   }
 

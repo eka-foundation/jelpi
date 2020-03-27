@@ -18,6 +18,7 @@ const Route = use('Route')
 
 Route.on('/').render('index')
 
+Route.get('tasks', 'TaskController.index')
 Route.post('tasks', 'TaskController.store')
 
 Route.get('facebook', async ({ ally }) => {
