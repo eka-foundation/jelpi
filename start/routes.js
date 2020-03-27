@@ -18,6 +18,8 @@ const Route = use('Route')
 
 Route.on('/').render('index')
 
+Route.post('tasks', 'TaskController.store')
+
 Route.get('facebook', async ({ ally }) => {
   await ally.driver('facebook').redirect()
 })

@@ -9,6 +9,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/tiny-slider.css" rel="stylesheet">
 {{ style('/css/app') }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>Get Help</td></table></a><a href='#givehelp'><table><td>Give Help</td></table></a><a href='#safety'><table><td>Safety</td></table></a><a href='#about'><table><td>About</td></table></a></td></table></menu>
@@ -27,7 +28,7 @@
       </needs>
       <form>
         <destroyed><div>:-(</div>We couldn't determine your location!</destroyed>
-        <inputwrap><input type='text'><fx1></fx1><fx2></fx2><placeholder>My name</placeholder></inputwrap>
+        <inputwrap><input type='text' id='ask-name'><fx1></fx1><fx2></fx2><placeholder>My name</placeholder></inputwrap>
         <inputwrap class='location locating'><span>Current Location</span><placeholder class='busy'>Locating</placeholder><placeholder class='done'>Location</placeholder></inputwrap>
         <inputwrap><button id='cancel' class='action'>Cancel</button><fx1></fx1><fx2></fx2></inputwrap>
         <inputwrap><button id='send' class='action'>Send</button><fx1></fx1><fx2></fx2></inputwrap>

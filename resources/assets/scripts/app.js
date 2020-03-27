@@ -815,11 +815,34 @@ Jelpi.sendButton = class {
     if( this.sending ){
       return;
     }
-    if( !this.parent.location ){
+    if (!this.parent.parent.location) {
       return;
     }
+    let nam = document.getElementById("ask-name").value;
+    let cat = document
+      .querySelector("needs > div:not(.hidden)")
+      .getAttribute("data-type");
     this.sending = true;
-    console.log('send');
+    axios
+      .post("/tasks", {
+        name: nam,
+        lat: this.parent.parent.location.coords.latitude,
+        lng: this.parent.parent.location.coords.longitude,
+        category: cat
+      })
+      .then((response) => {
+        console.log(response);
+        document.getElementById("ask-name").value = '';
+        this.parent.onCancel();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('Sorry! Something went wrong');
+      })
+      .then(() => {
+        this.sending = false;
+        console.log("sent");
+      });
   }
 }
 Jelpi.iCanHelpButton = class {
