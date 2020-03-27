@@ -3,22 +3,23 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class HelpRequestSchema extends Schema {
+class TaskSchema extends Schema {
   up () {
-    this.create('help_requests', (table) => {
+    this.create('tasks', (table) => {
       table.increments()
       table.integer('lat')
       table.integer('lng')
       table.string('category')
       table.string('fbid')
       table.string('name')
+      table.string('title', 1000)
       table.timestamps()
     })
   }
 
   down () {
-    this.drop('help_requests')
+    this.drop('tasks')
   }
 }
 
-module.exports = HelpRequestSchema
+module.exports = TaskSchema;
