@@ -23,8 +23,6 @@ ENV HOST=0.0.0.0
 ENV PORT=3333
 # Set app key at start time
 ENV APP_KEY=
-# Use non-root user
-USER node
 # Make directory for app to live in
 # It's important to set user first or owner will be root
 RUN mkdir -p /home/node/app/
@@ -39,7 +37,11 @@ COPY package*.json ./
 RUN npm ci --only=production
 # Copy over source code files
 COPY . .
+# Ensure Node can edit DB and public assets
+RUN chown -R node:node /home/node/app/
 # Expose port 3333 to outside world
 EXPOSE 3333
+# Use non-root user
+USER node
 # Start server up
 CMD [ "node", "./server.js" ]
