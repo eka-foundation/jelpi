@@ -283,15 +283,8 @@ Jelpi.asks = class {
     this.parent.locate( this.render.bind(this) );
   }
   render(locationResult) {
-    let randomType = () => {
-      let needs = [ 'Food', 'Medicine', 'Supplies' ];
-      return needs[ Math.floor( Math.random() * needs.length ) ];
-    },
-    randomLocationDelta = () => {
-      let random = Math.pow( Math.random(), 10 );
-      return random * ( Math.random() < .5 ? -1 : 1 );
-    };
     axios.get("/tasks").then(res => {
+      this.data = [];
       for (let i = 0; i <= res.data.length; i++) {
         if (res.data[i]) {
           this.data.push({
@@ -798,7 +791,7 @@ Jelpi.cancelButton = class {
     this.parent = parent;
   }
   init() {
-    this.element().addEventListener('click', this.onClick.bind(this));
+    this.element() && this.element().addEventListener('click', this.onClick.bind(this));
   }
   element() {
     return document.getElementById('cancel');
@@ -814,7 +807,7 @@ Jelpi.sendButton = class {
     this.parent = parent;
   }
   init() {
-    this.element().addEventListener('click', this.onClick.bind(this));
+    this.element() && this.element().addEventListener('click', this.onClick.bind(this));
   }
   element() {
     return document.getElementById('send');
@@ -828,7 +821,8 @@ Jelpi.sendButton = class {
     if (!this.parent.parent.location) {
       return;
     }
-    let nam = document.getElementById("ask-name").value;
+    let nam = document.getElementById("ask_name").value;
+    let fid = document.getElementById("fb_id").value;
     let cat = document
       .querySelector("needs > div:not(.hidden)")
       .getAttribute("data-type");
@@ -838,11 +832,10 @@ Jelpi.sendButton = class {
         name: nam,
         lat: this.parent.parent.location.coords.latitude,
         lng: this.parent.parent.location.coords.longitude,
-        category: cat
+        category: cat,
+        fbid: fid
       })
       .then((response) => {
-        console.log(response);
-        document.getElementById("ask-name").value = '';
         this.parent.onCancel();
       })
       .catch((error) => {
@@ -860,7 +853,7 @@ Jelpi.iCanHelpButton = class {
     this.parent = parent;
   }
   init() {
-    this.element().addEventListener('click', this.onClick.bind(this));
+    this.element() && this.element().addEventListener('click', this.onClick.bind(this));
   }
   element() {
     return document.getElementById('icanhelp');
