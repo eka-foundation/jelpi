@@ -22,10 +22,10 @@ Route.get('tasks', 'TaskController.index')
 Route.post('tasks', 'TaskController.store')
 
 Route.get('facebook', async ({ ally }) => {
-  await ally.driver('facebook').redirect()
+  await ally.driver('facebook').redirect();
 })
 
-Route.get('authenticated/facebook', async ({ ally, response }) => {
-  const fb_user = await ally.driver('facebook').getUser()
-  return response.redirect('back', { fb_user: fb_user })
+Route.get('authenticated/facebook', async ({ ally, view }) => {
+  const fb_user = await ally.driver('facebook').getUser();
+  return view.render('index', { name: fb_user.getName(), fb_id: fb_user.getId() })
 })

@@ -50,7 +50,7 @@ class TaskController {
     task.lat = request.input("lat");
     task.lng = request.input("lng");
     task.category = request.input("category");
-    task.fbid = '2957526370935693';
+    task.fbid = request.input("fbid");
     await task.save();
   }
 
