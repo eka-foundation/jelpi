@@ -20,6 +20,9 @@ class TaskController {
    * @param {View} ctx.view
    */
   async index({ view }) {
+    /* await Task.query()
+      .where('created_at', '<', 'DATE("now", "-2 day")')
+      .delete(); */
     let tasks = Task.all()
     return tasks
   }
