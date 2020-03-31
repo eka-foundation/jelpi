@@ -25,6 +25,7 @@ jobs:
       uses: appleboy/ssh-action@master
       env:
         APP_KEY: ${{ secrets.APP_KEY }}
+        FB_CLIENT_ID: ${{ secrets.FB_CLIENT_ID }}
         FB_CLIENT_SECRET: ${{ secrets.FB_CLIENT_SECRET }}
         REGISTRY_ACCESS_TOKEN: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
       with:
@@ -32,12 +33,16 @@ jobs:
         username: ubuntu
         command_timeout: 5m
         key: ${{ secrets.SERVER_ACCESS_KEY }}
-        envs: GITHUB_REF,APP_KEY,FB_CLIENT_SECRET,REGISTRY_ACCESS_TOKEN
+        envs: GITHUB_REF,APP_KEY,FB_CLIENT_ID,FB_CLIENT_SECRET,REGISTRY_ACCESS_TOKEN
         script: |
           docker login docker.pkg.github.com --username mcsneaky --password $REGISTRY_ACCESS_TOKEN
           docker pull docker.pkg.github.com/eka-foundation/jelpi/core:$(echo $GITHUB_REF | cut -d '/' -f3)
           docker stop jelpi-core; docker rm jelpi-core;
           docker run -d -p 127.0.0.1:3333:3333 --name jelpi-core --restart always \
+            -v ${PWD}/jelpi-db:/home/node/app/database/db
             -e APP_KEY=${APP_KEY} \
+            -e DB_DATABASE=jelpi \
+            -e FB_CLIENT_ID=${FB_CLIENT_ID} \
             -e FB_CLIENT_SECRET=${FB_CLIENT_SECRET} \
             docker.pkg.github.com/eka-foundation/jelpi/core:$(echo $GITHUB_REF | cut -d '/' -f3)
+          sleep 5; docker exec jelpi-core node ace migration:run --force

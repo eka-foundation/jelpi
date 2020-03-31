@@ -23,10 +23,7 @@ ENV HOST=0.0.0.0
 ENV PORT=3333
 # Set app key at start time
 ENV APP_KEY=
-# Use non-root user
-USER node
 # Make directory for app to live in
-# It's important to set user first or owner will be root
 RUN mkdir -p /home/node/app/
 # Set working directory
 WORKDIR /home/node/app
