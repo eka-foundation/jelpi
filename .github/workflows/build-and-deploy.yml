@@ -39,7 +39,7 @@ jobs:
           docker pull docker.pkg.github.com/eka-foundation/jelpi/core:$(echo $GITHUB_REF | cut -d '/' -f3)
           docker stop jelpi-core; docker rm jelpi-core;
           docker run -d -p 127.0.0.1:3333:3333 --name jelpi-core --restart always \
-            -v ${PWD}/jelpi-db:/home/node/app/database/db
+            -v ${PWD}/jelpi-db:/home/node/app/database/db \
             -e APP_KEY=${APP_KEY} \
             -e DB_DATABASE=jelpi \
             -e FB_CLIENT_ID=${FB_CLIENT_ID} \
