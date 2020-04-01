@@ -151,56 +151,10 @@ Jelpi.main = class {
     body.className = body.className.replace( /(^|\s)page-[^\s]+|$/, classname );
   }
 }
+
 Jelpi.safety = class {
   constructor(parent) {
-    this.slides = [
-      { heading: 'Use Protective Gear',
-        image: 'img/placeholder1.png',
-        do: [
-          'Use facemasks if you have them available.',
-          'Use disposable gloves, but only if you know how to use them the proper way and for one-time usage.',
-          'Learn the proper ways to use them, do not touch your face with your hands or gloves.',
-          'If you do not have gloves, use eg. paper tissues for touching handles, etc. and throw them away after 1 use.',
-          'If you do not have facemasks, use e.g. scarf in front of your mouth.',
-        ],
-        dont: [
-          'Hoard for protection and thus deny it from others.',
-          'Use disposable gloves long and thus spread the virus to many places.',
-          'Touch your eyes of mouth when positioning your facemask or scarf.',
-        ]
-      },
-      { heading: 'Minimize Surface Contact',
-        image: 'img/placeholder1.png',
-        do: [
-          'Avoid touching things outside your home.',
-          'Especially avoid touching the same things as many other people do: handles, shopping trolleys, etc.',
-          'Wear one-time protection (gloves or paper tissues) when you have to touch something.',
-        ],
-        dont: [
-          'When coming to the home, use hands (or dirty gloves) to touch door handles before you have washed your hands.'
-        ]
-      },
-      { heading: 'Keep Physical Distance With People',
-        image: 'img/placeholder1.png',
-        do: [],
-        dont: []
-      },
-      { heading: 'Minimize Leaving Home',
-        image: 'img/placeholder1.png',
-        do: [],
-        dont: []
-      },
-      { heading: 'Know Your Facts',
-        image: 'img/placeholder1.png',
-        do: [],
-        dont: []
-      },
-      { heading: 'Quarantine Immediately if in Doubt',
-        image: 'img/placeholder1.png',
-        do: [],
-        dont: []
-      }
-    ];
+    this.slides = window.safety_page;
   }
   hideSlider() {
     document.body.classList.remove('safetySliderVisible');
@@ -482,20 +436,19 @@ Jelpi.askDelay = class {
       days = hours / 24,
       months = (days / 365) * 12;
     if( seconds < 59 ){
-      return 'Right now';
+      return window.translations.right_now || 'Right now';
     }
     if( minutes < 59 ){
-      return `${Math.round( minutes )}m ago`;
+      return `${Math.round(minutes)}m ${window.translations.ago}`;
     }
     if( hours < 23 ){
-      return `${Math.round( hours )}h ago`;
+      return `${Math.round(hours)}h ${window.translations.ago}`;
     }
-    if( days < 365 / 12 ){
-      days = Math.round( days );
-      return `${days} day${days > 1 ? 's' : '' } ago`;
-    }
-    months = Math.round( months );
-    return `${months} month${months > 1 ? 's' : '' } ago`;
+    days = Math.round( days );
+    return `${days} ${
+      days > 1 ? window.translations.days : window.translations.day
+    } ${window.translations.ago}`;
+
   }
   element() {
     if( this.hasOwnProperty('_element') ){
@@ -535,9 +488,9 @@ Jelpi.askDate = class {
     let object = date.getObject();
     let texts = [];
     if( date.isToday() ){
-      texts.push( 'Today' );
+      texts.push( window.translations.today || 'Today' );
     } else if( date.isYesterday() ){
-      texts.push( 'Yesterday' );
+      texts.push( window.translations.yesterday || 'Yesterday' );
     } else {
       texts.push( `${object.j}.` );
       texts.push( `${object.n}.` );
@@ -575,9 +528,10 @@ Jelpi.askContactButton = class {
     if( this.hasOwnProperty('_element') ){
       return this._element;
     }
+    console.log(window.translations.do_not);
     let element = document.createElement('askcontactbutton');
     this._element = element;
-    element.innerText = 'Contact';
+    element.innerText = window.translations.contact;
     element.addEventListener('click', this.onClick.bind(this));
     return element;
   }
@@ -687,7 +641,8 @@ Jelpi.frontPage = class {
     this.parent.locate( this.onLocate.bind(this) );
     document.body.classList.add('need');
     let onTimeout = () => {
-      document.querySelector('input').focus();
+      let inp = document.querySelector('input');
+      inp && inp.focus();
     };
     let shouldAutoFocus = !Jelpi.helper.isTouch() || Jelpi.helper.isAndroid();
     shouldAutoFocus && setTimeout( onTimeout, 200 );
@@ -697,7 +652,7 @@ Jelpi.frontPage = class {
       return this.destroy();
     }
     let input = this.inputs.array.filter(input => { return input.element.classList.contains('location'); })[0];
-    input.element.classList.add('focus');
+    input && input.element.classList.add('focus');
   }
   destroy() {
     document.body.classList.add('destroyed');
