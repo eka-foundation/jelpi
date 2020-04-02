@@ -16,7 +16,8 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('index')
+Route.on("/").render("jelpi");
+Route.on("/privacy").render("privacy");
 
 Route.get('tasks', 'TaskController.index')
 Route.post('tasks', 'TaskController.store')
@@ -27,5 +28,5 @@ Route.get('facebook', async ({ ally }) => {
 
 Route.get('authenticated/facebook', async ({ ally, view }) => {
   const fb_user = await ally.driver('facebook').getUser();
-  return view.render('index', { name: fb_user.getName(), fb_id: fb_user.getId() })
+  return view.render('jelpi', { name: fb_user.getName(), fb_id: fb_user.getId() })
 })

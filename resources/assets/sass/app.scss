@@ -965,7 +965,7 @@ safetymenu > div:before,
   transform: none;
   transition: transform 300ms;
 }
-p, do, dont {
+p, do, dont, li.priv {
   display: block;
   padding: 0;
   text-align: left;
