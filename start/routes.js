@@ -17,6 +17,7 @@
 const Route = use('Route')
 
 Route.on("/").render("jelpi");
+Route.on("/privacy").render("privacy");
 
 Route.get('tasks', 'TaskController.index')
 Route.post('tasks', 'TaskController.store')
