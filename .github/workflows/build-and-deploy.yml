@@ -41,6 +41,7 @@ jobs:
           docker run -d -p 127.0.0.1:3333:3333 --name jelpi-core --restart always \
             -v ${PWD}/jelpi-db:/home/node/app/database/db \
             -e APP_KEY=${APP_KEY} \
+            -e APP_URL=https://www.jelpi.org \
             -e DB_DATABASE=jelpi \
             -e FB_CLIENT_ID=${FB_CLIENT_ID} \
             -e FB_CLIENT_SECRET=${FB_CLIENT_SECRET} \
