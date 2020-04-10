@@ -18,6 +18,10 @@ const Route = use('Route')
 
 Route.on("/").render("jelpi");
 Route.on("/privacy").render("privacy");
+Route.on("/givehelp").render("givehelp");
+Route.on("/safety").render("safety");
+Route.on("/about").render("about");
+Route.on("/privacy").render("privacy");
 
 Route.get('tasks', 'TaskController.index')
 Route.post('tasks', 'TaskController.store')

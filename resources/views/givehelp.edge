@@ -1,0 +1,53 @@
+@layout('index')
+
+@section('content')
+<body class='ready page-givehelp'>
+<menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>{{ antl.get('main.gethelp_page_title') }}</td></table></a><a href='givehelp'><table><td>{{ antl.get('main.givehelp_page_title') }}</td></table></a><a href='safety'><table><td>{{ antl.get('main.safety_page_title') }}</td></table></a><a href='about'><table><td>{{ antl.get('main.about_page_title') }}</td></table></a><a href='privacy'><table><td>{{ antl.get('main.privacy_page_title') }}</td></table></a></td></table></menu>
+<table class='section givehelp' id='section1'>
+  <tr>
+    <td>
+      <h1>{{ antl.get('main.givehelp_page_title') }}</h1>
+      <askslocating>{{ antl.get('main.location_loading') }}</askslocating>
+      <asksfilterstoggler>{{ antl.get('main.filters') }}<icon>&#9651;</icon></asksfilterstoggler>
+      <asksfilters>
+        <div>
+          {{ antl.get('main.categories_title') }}
+          <label>
+            <switch></switch>
+            {{ antl.get('main.show') }} {{ antl.get('main.category_1') }}
+          </label>
+          <label>
+            <switch></switch>
+            {{ antl.get('main.show') }} {{ antl.get('main.category_1') }}
+          </label>
+          <label>
+            <switch></switch>
+            {{ antl.get('main.show') }} {{ antl.get('main.category_1') }}
+          </label>
+          {{ antl.get('main.max_distance') }}
+          <distance></distance>
+          <slider></slider>
+        </div>
+      </asksfilters>
+      <asks>
+      </asks>
+    </td>
+  </tr>
+</table>
+<script>
+  window.translations = {
+    "ago": "{{ antl.get('main.ago') }}",
+    "day": "{{ antl.get('main.day') }}",
+    "days": "{{ antl.get('main.days') }}",
+    "do": "{{ antl.get('main.do') }}",
+    "do_not": "{{ antl.get('main.do_not') }}",
+    "contact": "{{ antl.get('main.contact') }}",
+    "today": "{{ antl.get('main.today') }}",
+    "right_now": "{{ antl.get('main.right_now') }}",
+    "yesterday": "{{ antl.get('main.yesterday') }}",
+  };
+</script>
+{{ script('/js/givehelp') }}
+{{ script('/js/menu') }}
+</body>
+@endsection
