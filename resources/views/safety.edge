@@ -1,0 +1,103 @@
+@layout('index')
+
+@section('content')
+<body class='page-safety'>
+<menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>{{ antl.get('main.gethelp_page_title') }}</td></table></a><a href='givehelp'><table><td>{{ antl.get('main.givehelp_page_title') }}</td></table></a><a href='safety'><table><td>{{ antl.get('main.safety_page_title') }}</td></table></a><a href='about'><table><td>{{ antl.get('main.about_page_title') }}</td></table></a><a href='privacy'><table><td>{{ antl.get('main.privacy_page_title') }}</td></table></a></td></table></menu>
+<table class='section safety' id='section2'>
+  <tr>
+    <td>
+      <h1>{{ antl.get('main.safety_page_title') }}</h1>
+      <safetymenu></safetymenu>
+      <div class="tinySlider">
+      </div>
+    </td>
+  </tr>
+</table>
+<script>
+  window.safety_page = [
+    { heading: "{{ antl.get('safety.heading1') }}",
+      image: "{{ antl.get('safety.image1') }}",
+      do: [
+        "{{ antl.get('safety.do1_1') }}",
+        "{{ antl.get('safety.do1_2') }}",
+        "{{ antl.get('safety.do1_3') }}",
+        "{{ antl.get('safety.do1_4') }}",
+        "{{ antl.get('safety.do1_5') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont1_1') }}",
+        "{{ antl.get('safety.dont1_2') }}",
+        "{{ antl.get('safety.dont1_3') }}",
+      ]
+    },
+    { heading: "{{ antl.get('safety.heading2') }}",
+      image: "{{ antl.get('safety.image2') }}",
+      do: [
+        "{{ antl.get('safety.do2_1') }}",
+        "{{ antl.get('safety.do2_2') }}",
+        "{{ antl.get('safety.do2_3') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont2_1') }}",
+      ]
+    },
+    { heading: "{{ antl.get('safety.heading3') }}",
+      image: "{{ antl.get('safety.image3') }}",
+      do: [
+        "{{ antl.get('safety.do3_1') }}",
+        "{{ antl.get('safety.do3_2') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont3_1') }}",
+      ]
+    },
+    { heading: "{{ antl.get('safety.heading4') }}",
+      image: "{{ antl.get('safety.image4') }}",
+      do: [
+        "{{ antl.get('safety.do4_1') }}",
+        "{{ antl.get('safety.do4_2') }}",
+        "{{ antl.get('safety.do4_3') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont4_1') }}",
+        "{{ antl.get('safety.dont4_2') }}",
+      ]
+    },
+    { heading: "{{ antl.get('safety.heading5') }}",
+      image: "{{ antl.get('safety.image5') }}",
+      do: [
+        "{{ antl.get('safety.do5_1') }}",
+        "{{ antl.get('safety.do5_2') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont5_1') }}",
+      ]
+    },
+    { heading: "{{ antl.get('safety.heading6') }}",
+      image: "{{ antl.get('safety.image6') }}",
+      do: [
+        "{{ antl.get('safety.do6_1') }}",
+        "{{ antl.get('safety.do6_2') }}",
+        "{{ antl.get('safety.do6_3') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont6_1') }}",
+      ]
+    },
+    { heading: "{{ antl.get('safety.heading7') }}",
+      image: "{{ antl.get('safety.image7') }}",
+      do: [
+        "{{ antl.get('safety.do7_1') }}",
+        "{{ antl.get('safety.do7_2') }}",
+        "{{ antl.get('safety.do7_3') }}",
+      ],
+      dont: [
+        "{{ antl.get('safety.dont7_1') }}",
+      ]
+    },
+  ];
+</script>
+{{ script('/js/safety') }}
+{{ script('/js/menu') }}
+</body>
+@endsection

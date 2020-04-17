@@ -1,8 +1,8 @@
 @layout('index')
 
 @section('content')
-<body class="ready page-about">
-<menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>{{ antl.get('main.gethelp_page_title') }}</td></table></a><a href='/#givehelp'><table><td>{{ antl.get('main.givehelp_page_title') }}</td></table></a><a href='/#safety'><table><td>{{ antl.get('main.safety_page_title') }}</td></table></a><a href='/#about'><table><td>{{ antl.get('main.about_page_title') }}</td></table></a></td></table></menu>
+<body class='page-privacy'>
+<menu><hamburger><slice></slice><slice></slice><slice></slice></hamburger><table><td><a href='.'><table><td>{{ antl.get('main.gethelp_page_title') }}</td></table></a><a href='givehelp'><table><td>{{ antl.get('main.givehelp_page_title') }}</td></table></a><a href='safety'><table><td>{{ antl.get('main.safety_page_title') }}</td></table></a><a href='about'><table><td>{{ antl.get('main.about_page_title') }}</td></table></a><a href='privacy'><table><td>{{ antl.get('main.privacy_page_title') }}</td></table></a></td></table></menu>
 <table class='section about'>
   <tr>
     <td>
@@ -938,5 +938,6 @@
     </td>
   </tr>
 </table>
+{{ script('/js/menu') }}
 </body>
 @endsection

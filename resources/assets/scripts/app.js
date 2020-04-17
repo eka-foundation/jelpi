@@ -86,15 +86,9 @@ Jelpi.helper = {
 Jelpi.main = class {
   constructor() {
     this.frontPage = new Jelpi.frontPage(this);
-    this.menu = new Jelpi.menu(this);
-    this.asks = new Jelpi.asks(this);
-    this.safety = new Jelpi.safety(this);
   }
   init() {
     this.frontPage.init();
-    this.menu.init();
-    this.asks.init();
-    this.safety.init();
   }
   locate(callback) {
     if( this.hasOwnProperty('location') ){
@@ -137,21 +131,24 @@ Jelpi.main = class {
       navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
   }
-  page(value) {
-    switch( value ){
-      case 'givehelp':
-        this.asks.update();
-        break;
-      case 'safety':
-        this.safety.hideSlider()
-        break;
-    }
-    let body = document.body,
-    classname = value.length ? ` page-${value}` : ' ';
-    body.className = body.className.replace( /(^|\s)page-[^\s]+|$/, classname );
-  }
 }
 
+Jelpi.facebookButton = class {
+  constructor(parent) {
+    this.parent = parent;
+  }
+  init() {
+    this.element().addEventListener('click', this.onClick.bind(this));
+  }
+  onClick(event) {
+    window.open('facebook','_self');
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  element() {
+    return document.getElementById('continueWithFacebook');
+  }
+}
 Jelpi.safety = class {
   constructor(parent) {
     this.slides = window.safety_page;
@@ -222,409 +219,12 @@ Jelpi.safety = class {
     return this._slider;
   }
 }
-Jelpi.asks = class {
-  constructor(parent) {
-    this.parent = parent;
-    this.data = [];
-    this.array = [];
-    this.filters = new Jelpi.asksFilters(this);
-    this.element = document.querySelector('asks');
-  }
-  init() {
-    this.filters.init();
-  }
-  update() {
-    this.parent.locate( this.render.bind(this) );
-  }
-  render(locationResult) {
-    axios.get("/tasks").then(res => {
-      this.data = [];
-      for (let i = 0; i <= res.data.length; i++) {
-        if (res.data[i]) {
-          this.data.push({
-            type: res.data[i].category,
-            timeStamp: res.data[i].created_at,
-            latitude:  res.data[i].lat,
-            longitude: res.data[i].lng,
-            fbid: res.data[i].fbid
-          });
-        }
-      }
-      this.array.map(ask => { ask.destroy() });
-      this.array = [];
-      this.data.map( this.initAsk.bind(this, locationResult) );
-      this.sort();
-      this.array.map(ask => { ask.init() });
-    });
-  }
-  initAsk(locationResult, properties) {
-    let ask = new Jelpi.ask(this, properties, locationResult);
-    ask.match() && this.array.push( ask );
-  }
-  sort() {
-    let calculateDistance = (coordinates) => {
-      return Jelpi.helper.crowFlightBetweenCoordinates( this.parent.location.coords, coordinates );
-    },
-    compareDistance = (a, b) => {
-      let aDistance = calculateDistance( a.properties ),
-      bDistance = calculateDistance( b.properties );
-      return aDistance - bDistance;
-    };
-    this.array.sort( compareDistance );
-  }
-}
-Jelpi.asksFilters = class {
-  constructor(parent) {
-    this.parent = parent;
-    this.toggler = new Jelpi.asksFiltersToggler(this);
-  }
-  init() {
-    this.toggler.init();
-  }
-  match(object) {
-    return true;
-  }
-}
-Jelpi.asksFiltersToggler = class {
-  constructor(parent) {
-    this.parent = parent;
-    this._open = false;
-  }
-  init() {
-    document.querySelector('asksfilterstoggler').addEventListener('click', this.onClick.bind(this));
-  }
-  onClick() {
-    this.toggle();
-  }
-  toggle() {
-    this.open( !this.open() );
-  }
-  open(value) {
-    if( typeof value === 'undefined' ){
-      return this._open;
-    }
-    this._open = value;
-    this.update();
-    return this._open;
-  }
-  update() {
-    let method = this.open() ? 'add' : 'remove';
-    document.body.classList[ method ]('asksfiltersopen');
-  }
-}
-Jelpi.ask = class {
-  constructor(parent, properties, locationResult) {
-    this.parent = parent;
-    this.properties = properties;
-    this.locationResult = locationResult;
-    this.distance = new Jelpi.askDistance(this);
-    this.delay = new Jelpi.askDelay(this);
-    this.icon = new Jelpi.askIcon(this);
-    this.type = new Jelpi.askType(this);
-    this.date = new Jelpi.askDate(this);
-    this.contactButton = new Jelpi.askContactButton(this);
-  }
-  init() {
-    this.distance.init();
-    this.delay.init();
-    this.icon.init();
-    this.type.init();
-    this.date.init();
-    this.contactButton.init();
-    this.parent.element.appendChild( this.element() );
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    let element = document.createElement('ask');
-    let className = `type${ this.properties.type }`;
-    element.classList.add( className );
-    this._element = element;
-    return element;
-  }
-  innerWrapper() {
-    if( this.hasOwnProperty('_innerWrapper') ){
-      return this._innerWrapper;
-    }
-    let element = document.createElement('div');
-    this.element().appendChild( element )
-    this._innerWrapper = element;
-    return element;
-  }
-  match() {
-    let filter = this.parent.filter;
-    // l('FILTER');
-    return true;
-  }
-  destroy() {
-    this.element().remove();
-  }
-}
-Jelpi.askIcon = class {
-  constructor(parent) {
-    this.parent = parent;
-  }
-  init() {
-    this.parent.element().appendChild( this.element() );
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    let element = document.createElement('askicon');
-    this._element = element;
-    return element;
-  }
-}
-Jelpi.askDistance = class {
-  constructor(parent) {
-    this.parent = parent;
-  }
-  init() {
-    this.update();
-    this.parent.innerWrapper().appendChild( this.element() );
-  }
-  update() {
-    let element = this.element();
-    element.innerHTML = '';
-    element.appendChild( this.content() );
-  }
-  content() {
-    return document.createTextNode( this.generateString() );
-  }
-  generateString() {
-    let distance = Jelpi.helper.crowFlightBetweenCoordinates(this.parent.locationResult.coords, this.parent.properties);
-    if( distance < .5 ){
-      return '< 500m';
-    }
-    if( distance < 1 ){
-      return '< 1km';
-    }
-    return `${Math.floor(distance)}km`;
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    let element = document.createElement('askdistance');
-    this._element = element;
-    return element;
-  }
-}
-Jelpi.askDelay = class {
-  constructor(parent) {
-    this.parent = parent;
-  }
-  init() {
-    this.update();
-    this.parent.innerWrapper().appendChild( this.element() );
-  }
-  update() {
-    let element = this.element();
-    element.innerHTML = '';
-    element.appendChild( this.content() );
-  }
-  content() {
-    return document.createTextNode( this.generateString() );
-  }
-  generateString() {
-    let diff = Date.now() - Date.parse(this.parent.properties.timeStamp),
-      seconds = diff / 1000,
-      minutes = seconds / 60,
-      hours = minutes / 60,
-      days = hours / 24,
-      months = (days / 365) * 12;
-    if( seconds < 59 ){
-      return window.translations.right_now || 'Right now';
-    }
-    if( minutes < 59 ){
-      return `${Math.round(minutes)}m ${window.translations.ago}`;
-    }
-    if( hours < 23 ){
-      return `${Math.round(hours)}h ${window.translations.ago}`;
-    }
-    days = Math.round( days );
-    return `${days} ${
-      days > 1 ? window.translations.days : window.translations.day
-    } ${window.translations.ago}`;
-
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    let element = document.createElement('askdelay');
-    this._element = element;
-    return element;
-  }
-}
-Jelpi.askType = class {
-  constructor(parent) {
-    this.parent = parent;
-  }
-  init() {
-    this.parent.element().appendChild( this.element() );
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    let element = document.createElement('asktype');
-    this._element = element;
-    element.appendChild( document.createTextNode( this.parent.properties.type ) );
-    return element;
-  }
-}
-Jelpi.askDate = class {
-  constructor(parent) {
-    this.parent = parent;
-  }
-  init() {
-    this.parent.element().appendChild( this.element() );
-  }
-  content() {
-    let date = new Jelpi.helper.date( this.parent.properties.timeStamp );
-    let object = date.getObject();
-    let texts = [];
-    if( date.isToday() ){
-      texts.push( window.translations.today || 'Today' );
-    } else if( date.isYesterday() ){
-      texts.push( window.translations.yesterday || 'Yesterday' );
-    } else {
-      texts.push( `${object.j}.` );
-      texts.push( `${object.n}.` );
-    }
-    if( object.Y !== new Date().getFullYear() ){
-      texts.push( object.Y );
-    }
-    texts.push( ` ${object.G}:${object.i}` );
-    return document.createTextNode( texts.join('') );
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    let element = document.createElement('askDate');
-    this._element = element;
-    element.appendChild( this.content() );
-    return element;
-  }
-}
-Jelpi.askContactButton = class {
-  constructor(parent) {
-    this.parent = parent;
-  }
-  init() {
-    this.parent.element().appendChild( this.element() );
-  }
-  onClick() {
-    if (this.parent.properties.fbid) {
-      window.open(`https://m.me/${this.parent.properties.fbid}`, "_blank");
-    }
-    l(`CONTACT FB ID: ${this.parent.properties.fbid} `);
-  }
-  element() {
-    if( this.hasOwnProperty('_element') ){
-      return this._element;
-    }
-    console.log(window.translations.do_not);
-    let element = document.createElement('askcontactbutton');
-    this._element = element;
-    element.innerText = window.translations.contact;
-    element.addEventListener('click', this.onClick.bind(this));
-    return element;
-  }
-}
-Jelpi.menu = class {
-  constructor(parent) {
-    this.parent = parent;
-    this._open = false;
-    this.array = [];
-  }
-  init() {
-    window.addEventListener( 'resize', this.onResize.bind(this) );
-    document.querySelector('hamburger').addEventListener('click', this.toggle.bind(this));
-    this.menuItems().map( this.initMenuItem.bind(this) );
-    this.array.map( menuItem => menuItem.init() );
-    this.updateBodyClassNameFromLocationHref();
-  }
-  updateBodyClassNameFromLocationHref() {
-    let hash = /#([^\s]+)/.exec(location.href);
-    if( !hash ){
-      return;
-    }
-    hash = hash[1];
-    this.pages().includes(hash) && this.page(hash);
-  }
-  pages() {
-    return this.array.map(menuItem => { return menuItem.page });
-  }
-  page(value) {
-    this.parent.page(value);
-  }
-  initMenuItem(element) {
-    this.array.push( new Jelpi.menuItem(this, element) );
-  }
-  menuItems() {
-    let array = [];
-    let elements = document.querySelectorAll('menu a');
-    for(let i = 0; i < elements.length; i++){
-      let element = elements[i];
-      array.push(element);
-    }
-    return array;
-  }
-  onResize() {
-    let onTimeout = () => {
-      window.innerWidth > 700 && this.open(false);
-      this.updateMenu();
-    }
-    clearTimeout( this.resizeTimeout );
-    this.resizeTimeout = setTimeout( onTimeout, 50 );
-  }
-  updateMenu() {
-    let method = window.innerWidth <= 700 ? 'add' : 'remove';
-    document.body.classList[method]('narrow');
-  }
-  toggle() {
-    this.open( !this.open() );
-  }
-  open(value) {
-    if( typeof value === 'undefined' ){
-      return this._open;
-    }
-    let method = value ? 'add' : 'remove';
-    document.body.classList[method]('menuOpen');
-    this._open = value;
-    return value;
-  }
-}
-Jelpi.menuItem = class {
-  constructor(parent, element) {
-    this.parent = parent;
-    this.element = element;
-  }
-  init() {
-    this.element.addEventListener('click', this.onClick.bind(this));
-    this.page = this.element.getAttribute('href').substr(1);
-  }
-  onClick(event) {
-    window.scrollTo(0,0);
-    if( !this.page.length ){
-      event.preventDefault();
-      Jelpi.helper.pushEmptyURL();
-    }
-    this.parent.page(this.page);
-    this.parent.open(false);
-  }
-}
 Jelpi.frontPage = class {
   constructor(parent) {
     this.parent = parent;
     this.needs = new Jelpi.needs(this);
     this.cancelButton = new Jelpi.cancelButton(this);
-    this.sendButton = new Jelpi.sendButton(this);
+    this.facebookButton = new Jelpi.facebookButton(this);
     // this.iCanHelpButton = new Jelpi.iCanHelpButton(this);
     this.inputs = new Jelpi.inputs(this);
   }
@@ -632,7 +232,7 @@ Jelpi.frontPage = class {
     window.addEventListener('resize', this.onResize.bind(this));
     this.needs.init();
     this.cancelButton.init();
-    this.sendButton.init();
+    this.facebookButton.init();
     // this.iCanHelpButton.init();
     this.inputs.init();
     setTimeout(()=> { document.body.classList.add('ready'); }, 20);

@@ -31,19 +31,54 @@ function sassRules() {
   ]
 }
 
-module.exports = {
-  entry: [
-    './resources/assets/sass/app.scss',
-    './resources/assets/scripts/app.js'
-  ],
-  output: {
-    path: path.resolve('./public/'),
-    filename: 'js/app.js'
-  },
+
+let config = {
   module: {
     rules: sassRules().concat(scriptRules())
   },
   plugins: [
     extractSass
   ]
-}
+},
+styleConfig = Object.assign({}, config, {
+  entry: './resources/assets/sass/app.scss',
+  output: {
+    path: path.resolve('./public/'),
+    filename: 'css/app.css'
+  },
+}),
+menuConfig = Object.assign({}, config, {
+  entry: './resources/assets/scripts/menu.js',
+  output: {
+    path: path.resolve('./public/'),
+    filename: 'js/menu.js'
+  },
+}),
+jelpiConfig = Object.assign({}, config, {
+  entry: './resources/assets/scripts/app.js',
+  output: {
+    path: path.resolve('./public/'),
+    filename: 'js/app.js'
+  },
+}),
+givehelpConfig = Object.assign({}, config,{
+  entry: './resources/assets/scripts/givehelp.js',
+  output: {
+    path: path.resolve('./public/'),
+    filename: 'js/givehelp.js'
+  },
+}),
+safetyConfig = Object.assign({}, config,{
+  entry: './resources/assets/scripts/safety.js',
+  output: {
+    path: path.resolve('./public/'),
+    filename: 'js/safety.js'
+  },
+});
+module.exports = [
+  styleConfig,
+  menuConfig,
+  jelpiConfig,
+  givehelpConfig,
+  safetyConfig
+];
