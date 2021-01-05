@@ -33,7 +33,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
